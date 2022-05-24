@@ -4,6 +4,10 @@ class Scene2 extends Phaser.Scene {
     }
 
     create() {
+        // 월드 크기
+        this.cameras.main.setBounds(0, 0, 500, 500);
+        this.cameras.main.centerOn(250, 250);
+
         // this.background = this.add.image(0,0, "background");
         this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
         this.background.setOrigin(0,0);
@@ -45,7 +49,7 @@ class Scene2 extends Phaser.Scene {
             powerUp.setBounce(1);
         }
 
-        this.player = this.physics.add.sprite(config.width / 2 - 8, config.height - 64, "player");
+        this.player = this.physics.add.sprite(250, 250, "player");
         this.player.play("thrust");
         this.cursorKeys = this.input.keyboard.createCursorKeys();
         this.player.setCollideWorldBounds(true);
@@ -72,11 +76,12 @@ class Scene2 extends Phaser.Scene {
     }
 
     update() {
+        // 매 프레임마다 ?
         this.moveShip(this.ship1, 1);
         this.moveShip(this.ship2, 2);
         this.moveShip(this.ship3, 3);
 
-        this.background.tilePositionY -= 0.5;
+        // this.background.tilePositionX -= 0.5;
         this.movePlayerManager();
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
             console.log("FIRE!");
@@ -85,15 +90,15 @@ class Scene2 extends Phaser.Scene {
 
     movePlayerManager() {
         if (this.cursorKeys.left.isDown) {
-            this.player.setVelocityX(-gameSettings.playerSpeed);
+            this.player.x -= gameSettings.playerSpeed;
         } else if (this.cursorKeys.right.isDown) {
-            this.player.setVelocityX(gameSettings.playerSpeed);
+            this.player.x += gameSettings.playerSpeed;
         }
 
         if (this.cursorKeys.up.isDown) {
-            this.player.setVelocityY(-gameSettings.playerSpeed);
+            this.player.y -= gameSettings.playerSpeed;
         } else if (this.cursorKeys.down.isDown) {
-            this.player.setVelocityY(gameSettings.playerSpeed);
+            this.player.y += gameSettings.playerSpeed;
         }
     }
 }

@@ -1,19 +1,20 @@
 var gameSettings = {
-  playerSpeed: 200,
+  playerSpeed: 3,
 }
 
-var config = {
-  width: 256,
-  height: 272,
+const config = {
+  // 카메라 크기
+  width: 500,
+  height: 500,
   backgroundColor: 0x000000,
   scene: [Scene1, Scene2],
   pixelArt: true,
   physics: {
     default: "arcade",
     arcade: {
-      debug: false
-    }
-  }
+      debug: true,
+    },
+  },
 }
 
-var game = new Phaser.Game(config);
+const game = new Phaser.Game(config);
