@@ -3,7 +3,7 @@ var gameSettings = {
 }
 
 const config = {
-  // 카메라 크기
+  // 맵 크기
   width: 400,
   height: 400,
   backgroundColor: 0x000000,

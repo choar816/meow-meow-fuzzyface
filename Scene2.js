@@ -4,9 +4,16 @@ class Scene2 extends Phaser.Scene {
     }
 
     create() {
-        // 월드 크기
+        var graphics = this.add.graphics();
+        graphics.fillStyle("Black");
+        graphics.fillRect(0, 0, config.width, 20);
+
+        this.score = 0;
+        this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE ", 16);
+
         var camera = this.cameras.main;
         this.cameras.addExisting(camera);
+        this.cameras.main.setZoom(2);
         // console.log(camera.x, camera.y);
 
         // this.background = this.add.image(0,0, "background");
@@ -31,11 +38,6 @@ class Scene2 extends Phaser.Scene {
         this.ship3.setInteractive();
 
         this.input.on('gameobjectdown', this.destroyShip, this);
-
-        this.add.text(20, 20, "Playing game", {
-            font: "25px Arial",
-            fill: "yellow",
-        });
 
         this.powerUps = this.physics.add.group();
 
@@ -102,13 +104,25 @@ class Scene2 extends Phaser.Scene {
 
     hurtPlayer(player, enemy) {
         this.resetShipPos(enemy);
-        player.x = config.width / 2 - 8;
-        player.y = config.height - 64;
+        // player.x = config.width / 2 - 8;
+        // player.y = config.height - 64;
     }
 
     hitEnemy(projectile, enemy) {
         projectile.destroy();
         this.resetShipPos(enemy);
+        this.score += 15;
+        var scoreFormated = this.zeroPad(this.score, 6);
+        this.scoreLabel.text = "SCORE " + scoreFormated;
+        console.log(this.score);
+    }
+
+    zeroPad(number, size) {
+        var stringNumber = String(number);
+        while (stringNumber < (size || 2)) {
+            stringNumber += "0" + stringNumber;
+        }
+        return stringNumber;
     }
 
     update() {
@@ -130,6 +144,7 @@ class Scene2 extends Phaser.Scene {
     }
 
     movePlayerManager() {
+        // console.log(this.player.x, this.player.y);
         if (this.cursorKeys.left.isDown) {
             this.player.x -= gameSettings.playerSpeed;
         } else if (this.cursorKeys.right.isDown) {
