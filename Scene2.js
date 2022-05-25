@@ -200,8 +200,10 @@ class Scene2 extends Phaser.Scene {
         // console.log(this.player.x, this.player.y);
         if (this.cursorKeys.left.isDown) {
             this.player.x -= gameSettings.playerSpeed;
+            this.player.flipX = true;
         } else if (this.cursorKeys.right.isDown) {
             this.player.x += gameSettings.playerSpeed;
+            this.player.flipX = false;
         }
 
         if (this.cursorKeys.up.isDown) {
