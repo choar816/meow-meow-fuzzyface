@@ -5,8 +5,9 @@ class Scene2 extends Phaser.Scene {
 
     create() {
         // 월드 크기
-        this.cameras.main.setBounds(0, 0, 500, 500);
-        this.cameras.main.centerOn(250, 250);
+        var camera = this.cameras.main;
+        this.cameras.addExisting(camera);
+        console.log(camera.x, camera.y);
 
         // this.background = this.add.image(0,0, "background");
         this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
@@ -53,6 +54,8 @@ class Scene2 extends Phaser.Scene {
         this.player.play("thrust");
         this.cursorKeys = this.input.keyboard.createCursorKeys();
         this.player.setCollideWorldBounds(true);
+
+        camera.startFollow(this.player);
 
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
