@@ -4,8 +4,8 @@ var gameSettings = {
 
 const config = {
   // 카메라 크기
-  width: 200,
-  height: 200,
+  width: 400,
+  height: 400,
   backgroundColor: 0x000000,
   scene: [Scene1, Scene2],
   pixelArt: true,

@@ -17,6 +17,11 @@ class Scene2 extends Phaser.Scene {
         this.ship2 = this.add.sprite(config.width/2, config.height/2, "ship2");
         this.ship3 = this.add.sprite(config.width/2 + 50, config.height/2, "ship3");
 
+        this.enemies = this.physics.add.group();
+        this.enemies.add(this.ship1);
+        this.enemies.add(this.ship2);
+        this.enemies.add(this.ship3);
+
         this.ship1.play("ship1_anim");
         this.ship2.play("ship2_anim");
         this.ship3.play("ship3_anim");
@@ -59,6 +64,16 @@ class Scene2 extends Phaser.Scene {
 
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.projectiles = this.add.group();
+
+        // collider : 충돌 -> 바운스
+        this.physics.add.collider(this.projectiles, this.powerUps, function(projectile, powerUp) {
+            projectile.destroy();
+        });
+
+        // overlap : 접촉 -> 바운스 X
+        this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
+        this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer, null, this);
+        this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
     }
 
     moveShip(ship, speed) {
@@ -77,6 +92,23 @@ class Scene2 extends Phaser.Scene {
     destroyShip(pointer, gameObject) {
         gameObject.setTexture("explosion");
         gameObject.play("explode");
+    }
+
+    pickPowerUp(player, powerUp) {
+        // parameter 1 : make it inactive
+        // parameter 2 : hide it from the display list
+        powerUp.disableBody(true, true);
+    }
+
+    hurtPlayer(player, enemy) {
+        this.resetShipPos(enemy);
+        player.x = config.width / 2 - 8;
+        player.y = config.height - 64;
+    }
+
+    hitEnemy(projectile, enemy) {
+        projectile.destroy();
+        this.resetShipPos(enemy);
     }
 
     update() {
