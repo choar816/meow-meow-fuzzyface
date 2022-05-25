@@ -7,7 +7,7 @@ class Scene2 extends Phaser.Scene {
         // 월드 크기
         var camera = this.cameras.main;
         this.cameras.addExisting(camera);
-        console.log(camera.x, camera.y);
+        // console.log(camera.x, camera.y);
 
         // this.background = this.add.image(0,0, "background");
         this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
@@ -58,6 +58,7 @@ class Scene2 extends Phaser.Scene {
         camera.startFollow(this.player);
 
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.projectiles = this.add.group();
     }
 
     moveShip(ship, speed) {
@@ -87,7 +88,12 @@ class Scene2 extends Phaser.Scene {
         // this.background.tilePositionX -= 0.5;
         this.movePlayerManager();
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-            console.log("FIRE!");
+            this.shootBeam();
+        }
+
+        for (var i=0; i<this.projectiles.getChildren().length; ++i) {
+            var beam = this.projectiles.getChildren()[i];
+            beam.update();
         }
     }
 
@@ -103,5 +109,9 @@ class Scene2 extends Phaser.Scene {
         } else if (this.cursorKeys.down.isDown) {
             this.player.y += gameSettings.playerSpeed;
         }
+    }
+
+    shootBeam() {
+        var beam = new Beam(this);
     }
 }
