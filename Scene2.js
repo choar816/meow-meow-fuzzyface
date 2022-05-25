@@ -73,8 +73,10 @@ class Scene2 extends Phaser.Scene {
             powerUp.setBounce(1);
         }
 
-        this.player = this.physics.add.sprite(250, 250, "player");
-        this.player.play("thrust");
+        // this.player = this.physics.add.sprite(250, 250, "player");
+        this.player = this.physics.add.image(250, 250, "player");
+        this.player.scale = 0.2;
+        // this.player.play("thrust");
         this.cursorKeys = this.input.keyboard.createCursorKeys();
         this.player.setCollideWorldBounds(true);
 
