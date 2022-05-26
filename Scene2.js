@@ -4,12 +4,7 @@ class Scene2 extends Phaser.Scene {
     }
 
     create() {
-        var graphics = this.add.graphics();
-        graphics.fillStyle("Black");
-        graphics.fillRect(0, 0, config.width, 20);
-
         this.score = 0;
-        this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE ", 16);
 
         this.beamSound = this.sound.add("audio_beam");
         this.explosionSound = this.sound.add("audio_explosion");
@@ -29,12 +24,13 @@ class Scene2 extends Phaser.Scene {
 
         var camera = this.cameras.main;
         this.cameras.addExisting(camera);
-        this.cameras.main.setZoom(2);
+        this.cameras.main.setZoom(1);
         // console.log(camera.x, camera.y);
 
-        // this.background = this.add.image(0,0, "background");
         this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
         this.background.setOrigin(0,0);
+        this.scoreLabel = this.add.bitmapText(0, 0, "pixelFont", "SCORE ", 16);
+        this.scoreLabel.setScrollFactor(0);
 
         this.ship1 = this.add.sprite(config.width/2 - 50, config.height/2, "ship");
         this.ship2 = this.add.sprite(config.width/2, config.height/2, "ship2");

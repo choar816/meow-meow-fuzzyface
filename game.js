@@ -4,8 +4,8 @@ var gameSettings = {
 
 const config = {
   // 맵 크기
-  width: 400,
-  height: 400,
+  width: 800,
+  height: 600,
   backgroundColor: 0x000000,
   scene: [Scene1, Scene2],
   pixelArt: true,
