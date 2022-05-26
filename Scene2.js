@@ -78,6 +78,12 @@ class Scene2 extends Phaser.Scene {
         this.player.scale = 0.2;
         // this.player.play("thrust");
         this.cursorKeys = this.input.keyboard.createCursorKeys();
+        this.wasdKeys = this.input.keyboard.addKeys({
+            up: Phaser.Input.Keyboard.KeyCodes.W,
+            down: Phaser.Input.Keyboard.KeyCodes.S,
+            left: Phaser.Input.Keyboard.KeyCodes.A,
+            right: Phaser.Input.Keyboard.KeyCodes.D,
+        });
         this.player.setCollideWorldBounds(true);
 
         camera.startFollow(this.player);
@@ -198,17 +204,17 @@ class Scene2 extends Phaser.Scene {
 
     movePlayerManager() {
         // console.log(this.player.x, this.player.y);
-        if (this.cursorKeys.left.isDown) {
+        if (this.cursorKeys.left.isDown || this.wasdKeys.left.isDown) {
             this.player.x -= gameSettings.playerSpeed;
             this.player.flipX = true;
-        } else if (this.cursorKeys.right.isDown) {
+        } else if (this.cursorKeys.right.isDown || this.wasdKeys.right.isDown) {
             this.player.x += gameSettings.playerSpeed;
             this.player.flipX = false;
         }
 
-        if (this.cursorKeys.up.isDown) {
+        if (this.cursorKeys.up.isDown || this.wasdKeys.up.isDown) {
             this.player.y -= gameSettings.playerSpeed;
-        } else if (this.cursorKeys.down.isDown) {
+        } else if (this.cursorKeys.down.isDown || this.wasdKeys.down.isDown) {
             this.player.y += gameSettings.playerSpeed;
         }
     }
