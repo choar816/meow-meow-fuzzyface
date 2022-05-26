@@ -91,7 +91,7 @@ class PlayingScene extends Phaser.Scene {
 
         // overlap : 접촉 -> 바운스 X
         this.physics.add.overlap(this.m_player, this.m_powerUps, this.pickPowerUp, null, this);
-        this.physics.add.overlap(this.m_player, this.m_enemies, () => this.m_player.hitByEnemy(123), null, this);
+        this.physics.add.overlap(this.m_player, this.m_enemies, () => this.m_player.hitByEnemy(this, 123), null, this);
         this.physics.add.overlap(this.m_projectiles, this.m_enemies, this.hitEnemy, null, this);
     }
 
@@ -120,40 +120,40 @@ class PlayingScene extends Phaser.Scene {
         powerUp.destroy();
     }
 
-    hurtPlayer(player, enemy) {
-        this.resetShipPos(enemy);
+    // hurtPlayer(player, enemy) {
+    //     this.resetShipPos(enemy);
+    //
+    //     if (this.m_player.alpha < 1)
+    //         return;
+    //
+    //     var explosion = new Explosion(this, player.x, player.y);
+    //     player.disableBody(true, true);
+    //     this.time.addEvent({
+    //         delay: 1000,
+    //         callback: this.resetPlayer,
+    //         callbackScope: this,
+    //         loop: false
+    //     });
+    // }
 
-        if (this.m_player.alpha < 1)
-            return;
-
-        var explosion = new Explosion(this, player.x, player.y);
-        player.disableBody(true, true);
-        this.time.addEvent({
-            delay: 1000,
-            callback: this.resetPlayer,
-            callbackScope: this,
-            loop: false
-        });
-    }
-
-    resetPlayer() {
-        var x = config.width / 2 - 8;
-        var y = config.height - 64;
-        this.m_player.enableBody(true, x, y, true, true);
-        this.m_player.alpha = 0.5;
-
-        var tween = this.tweens.add({
-            targets: this.m_player,
-            y: config.height - 64,
-            ease: 'Power1',
-            duration: 1500,
-            repeat: 0,
-            onComplete: function() {
-                this.m_player.alpha = 1;
-            },
-            callbackScope: this
-        });
-    }
+    // resetPlayer() {
+    //     var x = config.width / 2 - 8;
+    //     var y = config.height - 64;
+    //     this.m_player.enableBody(true, x, y, true, true);
+    //     this.m_player.alpha = 0.5;
+    //
+    //     var tween = this.tweens.add({
+    //         targets: this.m_player,
+    //         y: config.height - 64,
+    //         ease: 'Power1',
+    //         duration: 1500,
+    //         repeat: 0,
+    //         onComplete: function() {
+    //             this.m_player.alpha = 1;
+    //         },
+    //         callbackScope: this
+    //     });
+    // }
 
     hitEnemy(projectile, enemy) {
         var explosion = new Explosion(this, enemy.x, enemy.y);
