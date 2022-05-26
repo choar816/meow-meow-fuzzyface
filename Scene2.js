@@ -6,6 +6,7 @@ class Scene2 extends Phaser.Scene {
     create() {
         this.score = 0;
 
+        this.sound.pauseOnBlur = false;
         this.beamSound = this.sound.add("audio_beam");
         this.explosionSound = this.sound.add("audio_explosion");
         this.pickupSound = this.sound.add("audio_pickup");
@@ -13,7 +14,7 @@ class Scene2 extends Phaser.Scene {
         this.music = this.sound.add("music");
         var musicConfig = {
             mute: false,
-            volume: 1,
+            volume: 0.7,
             rate: 1,
             detune: 0,
             seek: 0,
