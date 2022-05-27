@@ -134,7 +134,7 @@ class PlayingScene extends Phaser.Scene {
         if (this.player.alpha < 1)
             return;
 
-        var explosion = new Explosion(this, player.x, player.y);
+        const explosion = new Explosion(this, player.x, player.y);
         player.disableBody(true, true);
         this.time.addEvent({
             delay: 1000,
@@ -145,12 +145,12 @@ class PlayingScene extends Phaser.Scene {
     }
 
     resetPlayer() {
-        var x = config.width / 2 - 8;
-        var y = config.height - 64;
+        const x = config.width / 2 - 8;
+        const y = config.height - 64;
         this.player.enableBody(true, x, y, true, true);
         this.player.alpha = 0.5;
 
-        var tween = this.tweens.add({
+        const tween = this.tweens.add({
             targets: this.player,
             y: config.height - 64,
             ease: 'Power1',
@@ -164,19 +164,19 @@ class PlayingScene extends Phaser.Scene {
     }
 
     hitEnemy(projectile, enemy) {
-        var explosion = new Explosion(this, enemy.x, enemy.y);
+        const explosion = new Explosion(this, enemy.x, enemy.y);
 
         projectile.destroy();
         this.resetShipPos(enemy);
         this.score += 15;
-        var scoreFormated = this.zeroPad(this.score, 6);
+        const scoreFormated = this.zeroPad(this.score, 6);
         this.scoreLabel.text = "SCORE " + scoreFormated;
         console.log(this.score);
         this.explosionSound.play();
     }
 
     zeroPad(number, size) {
-        var stringNumber = String(number);
+        let stringNumber = String(number);
         while (stringNumber < (size || 2)) {
             stringNumber += "0" + stringNumber;
         }
@@ -197,8 +197,8 @@ class PlayingScene extends Phaser.Scene {
             }
         }
 
-        for (var i=0; i<this.projectiles.getChildren().length; ++i) {
-            var beam = this.projectiles.getChildren()[i];
+        for (let i=0; i<this.projectiles.getChildren().length; ++i) {
+            const beam = this.projectiles.getChildren()[i];
             beam.update();
         }
     }
@@ -221,7 +221,7 @@ class PlayingScene extends Phaser.Scene {
     }
 
     shootBeam() {
-        var beam = new Beam(this);
+        const beam = new Beam(this);
         this.beamSound.play();
     }
 }
