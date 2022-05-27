@@ -100,10 +100,7 @@ class PlayingScene extends Phaser.Scene {
         }
 
         // player
-        this.m_player = this.physics.add.existing(new Player(this, "player"));
-        // this.m_player = this.physics.add.image(250, 250, "player");
-        // this.m_player.scale = 0.2;
-        this.m_player.setCollideWorldBounds(true);
+        this.m_player = new Player(this, "player");
         m_camera.startFollow(this.m_player);
 
         // keys
