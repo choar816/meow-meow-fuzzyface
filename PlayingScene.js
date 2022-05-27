@@ -178,8 +178,8 @@ class PlayingScene extends Phaser.Scene {
         this.movePlayerManager();
 
         if (Phaser.Input.Keyboard.JustDown(this.m_spacebar)) {
-            if (this.m_player.active) {
-                this.shootBeam();
+            if (this.m_player.active) { // disableBody -> active false 됨
+                this.m_player.shootBeam();
             }
         }
 
@@ -201,10 +201,5 @@ class PlayingScene extends Phaser.Scene {
         } else if (this.m_cursorKeys.down.isDown || this.m_wasdKeys.down.isDown) {
             this.m_player.move(Direction.Down);
         }
-    }
-
-    shootBeam() {
-        const beam = new Beam(this);
-        this.m_beamSound.play();
     }
 }

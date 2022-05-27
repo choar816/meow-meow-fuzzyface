@@ -82,4 +82,9 @@ class Player extends Phaser.Physics.Arcade.Image {
                 break;
         }
     }
+
+    shootBeam() {
+        const beam = new Beam(this.scene);
+        this.scene.m_beamSound.play();
+    }
 }
