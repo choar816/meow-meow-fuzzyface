@@ -1,4 +1,4 @@
-class LoadingScene extends Phaser.Scene {
+class Scene1 extends Phaser.Scene {
     constructor() {
         super("bootGame");
         // bootGame : 이 scene의 identifier
@@ -92,6 +92,12 @@ class LoadingScene extends Phaser.Scene {
             frameRate: 20,
             repeat: -1
         });
+        // this.anims.create({
+        //     key: "thrust",
+        //     frames: this.anims.generateFrameNumbers("player"),
+        //     frameRate: 20,
+        //     repeat: -1
+        // });
         this.anims.create({
             key: "beam_anim",
             frames: this.anims.generateFrameNumbers("beam"),
