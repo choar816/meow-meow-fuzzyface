@@ -55,7 +55,7 @@ class PlayingScene extends Phaser.Scene {
         this.m_enemies.add(this.m_ship1);
         this.m_enemies.add(this.m_ship2);
         this.m_enemies.add(this.m_ship3);
-        Phaser.Actions.Call(this.m_ships.getChildren(), function(ship) {
+        Phaser.Actions.Call(this.m_ships.getChildren(), (ship) => {
             this.m_enemies.add(ship);
         }, this);
 
@@ -67,7 +67,7 @@ class PlayingScene extends Phaser.Scene {
         this.m_ship1.setInteractive();
         this.m_ship2.setInteractive();
         this.m_ship3.setInteractive();
-        Phaser.Actions.Call(this.m_ships.getChildren(), function(ship) {
+        Phaser.Actions.Call(this.m_ships.getChildren(), (ship) => {
             ship.setInteractive();
         }, this);
 
@@ -167,7 +167,7 @@ class PlayingScene extends Phaser.Scene {
         this.moveShip(this.m_ship2, 2);
         this.moveShip(this.m_ship3, 3);
 
-        Phaser.Actions.Call(this.m_ships.getChildren(), function(ship) {
+        Phaser.Actions.Call(this.m_ships.getChildren(), (ship) => {
             this.moveShip(ship, 0.5);
         }, this);
 
