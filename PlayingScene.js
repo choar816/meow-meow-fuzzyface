@@ -37,6 +37,16 @@ class PlayingScene extends Phaser.Scene {
         this.m_background.setOrigin(0,0);
 
         // enemies
+        this.m_ships = this.physics.add.group();
+        this.m_ships1 = this.add.sprite(10, 10, "ship");
+        this.m_ships2 = this.add.sprite(10, 20, "ship");
+        this.m_ships3 = this.add.sprite(20, 10, "ship");
+        this.m_ships4 = this.add.sprite(20, 20, "ship");
+        this.m_ships.add(this.m_ships1);
+        this.m_ships.add(this.m_ships2);
+        this.m_ships.add(this.m_ships3);
+        this.m_ships.add(this.m_ships4);
+
         this.m_ship1 = this.add.sprite(config.width/2 - 50, config.height/2, "ship");
         this.m_ship2 = this.add.sprite(config.width/2, config.height/2, "ship2");
         this.m_ship3 = this.add.sprite(config.width/2 + 50, config.height/2, "ship3");
@@ -45,14 +55,21 @@ class PlayingScene extends Phaser.Scene {
         this.m_enemies.add(this.m_ship1);
         this.m_enemies.add(this.m_ship2);
         this.m_enemies.add(this.m_ship3);
+        Phaser.Actions.Call(this.m_ships.getChildren(), function(ship) {
+            this.m_enemies.add(ship);
+        }, this);
 
         this.m_ship1.play("ship1_anim");
         this.m_ship2.play("ship2_anim");
         this.m_ship3.play("ship3_anim");
+        // this.m_ships1.play("ship1_anim");
 
         this.m_ship1.setInteractive();
         this.m_ship2.setInteractive();
         this.m_ship3.setInteractive();
+        Phaser.Actions.Call(this.m_ships.getChildren(), function(ship) {
+            ship.setInteractive();
+        }, this);
 
         this.input.on('gameobjectdown', this.destroyShip, this);
         this.m_projectiles = this.add.group();
@@ -149,6 +166,10 @@ class PlayingScene extends Phaser.Scene {
         this.moveShip(this.m_ship1, 1);
         this.moveShip(this.m_ship2, 2);
         this.moveShip(this.m_ship3, 3);
+
+        Phaser.Actions.Call(this.m_ships.getChildren(), function(ship) {
+            this.moveShip(ship, 0.5);
+        }, this);
 
         // this.background.tilePositionX -= 0.5;
         this.movePlayerManager();
