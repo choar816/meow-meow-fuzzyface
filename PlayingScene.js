@@ -100,7 +100,7 @@ class PlayingScene extends Phaser.Scene {
         }
 
         // player
-        this.m_player = new Player(this, "player");
+        this.m_player = new Player(this);
         m_camera.startFollow(this.m_player);
 
         // keys
