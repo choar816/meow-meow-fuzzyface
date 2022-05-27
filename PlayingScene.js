@@ -100,7 +100,7 @@ class PlayingScene extends Phaser.Scene {
         });
         // overlap : 접촉 -> 바운스 X
         this.physics.add.overlap(this.m_player, this.m_powerUps, this.pickPowerUp, null, this);
-        this.physics.add.overlap(this.m_player, this.m_enemies, this.hurtPlayer, null, this);
+        this.physics.add.overlap(this.m_player, this.m_enemies, () => this.m_player.hitByEnemy(123), null, this);
         this.physics.add.overlap(this.m_projectiles, this.m_enemies, this.hitEnemy, null, this);
     }
 
@@ -131,41 +131,6 @@ class PlayingScene extends Phaser.Scene {
         powerUp.disableBody(true, true);
         this.m_pickupSound.play();
         powerUp.destroy();
-    }
-
-    hurtPlayer(player, enemy) {
-        this.resetShipPos(enemy);
-
-        if (player.alpha < 1)
-            return;
-
-        const explosion = new Explosion(this, player.x, player.y);
-        player.disableBody(true, true);
-        this.time.addEvent({
-            delay: 1000,
-            callback: this.resetPlayer,
-            callbackScope: this,
-            loop: false
-        });
-    }m_
-
-    resetPlayer() {
-        const x = config.width / 2 - 8;
-        const y = config.height - 64;
-        this.m_player.enableBody(true, x, y, true, true);
-        this.m_player.alpha = 0.5;
-
-        const tween = this.tweens.add({
-            targets: this.m_player,
-            y: config.height - 64,
-            ease: 'Power1',
-            duration: 1500,
-            repeat: 0,
-            onComplete: function() {
-                this.m_player.alpha = 1;
-            },
-            callbackScope: this
-        });
     }
 
     hitEnemy(projectile, enemy) {

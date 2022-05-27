@@ -23,7 +23,39 @@ class Player extends Phaser.Physics.Arcade.Image {
     }
 
     hitByEnemy(damage) {
-        console.log(`HIT! damage: ${damage}`)
+        // this.resetShipPos(enemy);
+
+        if (this.alpha < 1)
+            return;
+
+        console.log(`HIT! damage: ${damage}`);
+        const explosion = new Explosion(this.scene, this.x, this.y);
+        this.disableBody(true, true);
+        this.scene.time.addEvent({
+            delay: 1000,
+            callback: this.resetPlayer,
+            callbackScope: this,
+            loop: false
+        });
+    }
+
+    resetPlayer() {
+        const x = config.width / 2 - 8;
+        const y = config.height - 64;
+        this.enableBody(true, x, y, true, true);
+        this.alpha = 0.5;
+
+        const tween = this.scene.tweens.add({
+            targets: this,
+            y: config.height - 64,
+            ease: 'Power1',
+            duration: 1500,
+            repeat: 0,
+            onComplete: function() {
+                this.alpha = 1;
+            },
+            callbackScope: this
+        });
     }
 
     move(direction) {
