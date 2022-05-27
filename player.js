@@ -12,10 +12,7 @@ class Player extends Phaser.Physics.Arcade.Image {
         let x = 250;
         let y = 250;
         super(scene, x, y, "player");
-        this.scale = 0.2;
-        // scene.add.existing(this);
-        // scene.physics.add.image(250, 250, "player");
-        // scene.physics.world.enableBody(this);
+        // this.scale = 0.2;
     }
 
     update() {

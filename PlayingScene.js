@@ -6,7 +6,7 @@ class PlayingScene extends Phaser.Scene {
     create() {
         // score
         this.m_score = 0;
-        this.m_scoreLabel = this.add.bitmapText(0, 0, "pixelFont", `SCORE ${this.m_score}`, 16);
+        this.m_scoreLabel = this.add.bitmapText(0, 0, "pixelFont", `SCORE ${this.m_score.toString().padStart(6, '0')}`, 16);
         this.m_scoreLabel.setScrollFactor(0);
 
         // sound
@@ -17,12 +17,12 @@ class PlayingScene extends Phaser.Scene {
 
         this.m_music = this.sound.add("music");
         const musicConfig = {
-            mute: false,
+            mute: true, // edit later
             volume: 0.7,
             rate: 1,
             detune: 0,
             seek: 0,
-            loop: false,
+            loop: true,
             delay: 0
         };
         this.m_music.play(musicConfig);
@@ -139,18 +139,9 @@ class PlayingScene extends Phaser.Scene {
         projectile.destroy();
         this.resetShipPos(enemy);
         this.m_score += 15;
-        const scoreFormated = this.zeroPad(this.m_score, 6);
-        this.m_scoreLabel.text = "SCORE " + scoreFormated;
+        this.m_scoreLabel.text = "SCORE " + this.m_score.toString().padStart(6, '0');
         console.log(this.m_score);
         this.m_explosionSound.play();
-    }
-
-    zeroPad(number, size) {
-        let stringNumber = String(number);
-        while (stringNumber < (size || 2)) {
-            stringNumber += "0" + stringNumber;
-        }
-        return stringNumber;
     }
 
     update() {
@@ -161,6 +152,7 @@ class PlayingScene extends Phaser.Scene {
 
         // this.background.tilePositionX -= 0.5;
         this.movePlayerManager();
+
         if (Phaser.Input.Keyboard.JustDown(this.m_spacebar)) {
             if (this.m_player.active) {
                 this.shootBeam();
