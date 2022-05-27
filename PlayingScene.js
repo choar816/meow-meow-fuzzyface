@@ -1,4 +1,4 @@
-class Scene2 extends Phaser.Scene {
+class PlayingScene extends Phaser.Scene {
     constructor() {
         super("playGame");
     }

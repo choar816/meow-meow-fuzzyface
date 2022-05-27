@@ -1,4 +1,4 @@
-class Scene1 extends Phaser.Scene {
+class LoadingScene extends Phaser.Scene {
     constructor() {
         super("bootGame");
         // bootGame : 이 scene의 identifier
