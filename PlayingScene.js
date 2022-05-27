@@ -177,12 +177,6 @@ class PlayingScene extends Phaser.Scene {
         // this.background.tilePositionX -= 0.5;
         this.movePlayerManager();
 
-        if (Phaser.Input.Keyboard.JustDown(this.m_spacebar)) {
-            if (this.m_player.active) { // disableBody -> active false 됨
-                this.m_player.shootBeam();
-            }
-        }
-
         for (let i=0; i<this.m_projectiles.getChildren().length; ++i) {
             const beam = this.m_projectiles.getChildren()[i];
             beam.update();

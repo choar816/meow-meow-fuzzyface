@@ -19,6 +19,8 @@ class Player extends Phaser.Physics.Arcade.Image {
 
         // physics
         this.setCollideWorldBounds(true);
+
+        setInterval(this.shootBeam.bind(this), 1000);
     }
 
     update() {
@@ -84,7 +86,7 @@ class Player extends Phaser.Physics.Arcade.Image {
     }
 
     shootBeam() {
-        const beam = new Beam(this.scene);
+        const beam = new Beam(this.scene, this);
         this.scene.m_beamSound.play();
     }
 }

@@ -1,7 +1,7 @@
 class Beam extends Phaser.GameObjects.Sprite {
-    constructor(scene) {
-        let x = scene.m_player.x;
-        let y = scene.m_player.y - 16;
+    constructor(scene, player) {
+        let x = player.x;
+        let y = player.y - 16;
         super(scene, x, y, "beam");
         scene.add.existing(this);
         this.play("beam_anim");
