@@ -36,6 +36,7 @@ class PlayingScene extends Phaser.Scene {
         this.m_background = this.add.tileSprite(0, 0, config.width, config.height, "background");
         this.m_background.setOrigin(0,0);
 
+        // enemies
         this.m_ship1 = this.add.sprite(config.width/2 - 50, config.height/2, "ship");
         this.m_ship2 = this.add.sprite(config.width/2, config.height/2, "ship2");
         this.m_ship3 = this.add.sprite(config.width/2 + 50, config.height/2, "ship3");
@@ -54,7 +55,9 @@ class PlayingScene extends Phaser.Scene {
         this.m_ship3.setInteractive();
 
         this.input.on('gameobjectdown', this.destroyShip, this);
+        this.m_projectiles = this.add.group();
 
+        // powerUp
         this.m_powerUps = this.physics.add.group();
 
         let maxObjects = 4;
@@ -73,10 +76,14 @@ class PlayingScene extends Phaser.Scene {
             powerUp.setBounce(1);
         }
 
-        // this.player = this.physics.add.sprite(250, 250, "player");
+        // player
         this.m_player = this.physics.add.image(250, 250, "player");
         this.m_player.scale = 0.2;
-        // this.player.play("thrust");
+        this.m_player.setCollideWorldBounds(true);
+        m_camera.startFollow(this.m_player);
+
+        // keys
+        this.m_spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.m_cursorKeys = this.input.keyboard.createCursorKeys();
         this.m_wasdKeys = this.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -84,18 +91,13 @@ class PlayingScene extends Phaser.Scene {
             left: Phaser.Input.Keyboard.KeyCodes.A,
             right: Phaser.Input.Keyboard.KeyCodes.D,
         });
-        this.m_player.setCollideWorldBounds(true);
 
-        m_camera.startFollow(this.m_player);
 
-        this.m_spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        this.m_projectiles = this.add.group();
-
+        // collisions
         // collider : 충돌 -> 바운스
         this.physics.add.collider(this.m_projectiles, this.m_powerUps, function(projectile, powerUp) {
             projectile.destroy();
         });
-
         // overlap : 접촉 -> 바운스 X
         this.physics.add.overlap(this.m_player, this.m_powerUps, this.pickPowerUp, null, this);
         this.physics.add.overlap(this.m_player, this.m_enemies, this.hurtPlayer, null, this);
