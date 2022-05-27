@@ -25,36 +25,8 @@ class Player extends Phaser.GameObjects.Image {
     fire() {
     }
 
-    hitByEnemy(scene, damage) {
-        console.log(`HIT! damage: ${damage}`);
-        scene.physics.world.disableBody(true, true);
-        // this.disableBody(true, true);
-        scene.time.addEvent({
-            delay: 1000,
-            callback: this.resetPlayer,
-            callbackScope: this,
-            loop: false
-        });
-    }
-
-    resetPlayer(scene) {
-        let x = config.width / 2 - 8;
-        let y = config.height - 64;
-        scene.physics.world.enableBody(true, x, y,true, true);
-        // this.enableBody(true, x, y, true, true);
-        this.alpha = 0.5;
-
-        let tween = scene.tweens.add({
-            targets: this,
-            y: config.height - 64,
-            ease: 'Power1',
-            duration: 1500,
-            repeat: 0,
-            onComplete: function() {
-                this.alpha = 1;
-            },
-            callbackScope: this
-        });
+    hitByEnemy(damage) {
+        console.log(`HIT! damage: ${damage}`)
     }
 
     move(direction) {
