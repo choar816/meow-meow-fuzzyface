@@ -77,8 +77,9 @@ class PlayingScene extends Phaser.Scene {
         }
 
         // player
-        this.m_player = this.physics.add.image(250, 250, "player");
-        this.m_player.scale = 0.2;
+        this.m_player = this.physics.add.existing(new Player(this));
+        // this.m_player = this.physics.add.image(250, 250, "player");
+        // this.m_player.scale = 0.2;
         this.m_player.setCollideWorldBounds(true);
         m_camera.startFollow(this.m_player);
 
@@ -91,7 +92,6 @@ class PlayingScene extends Phaser.Scene {
             left: Phaser.Input.Keyboard.KeyCodes.A,
             right: Phaser.Input.Keyboard.KeyCodes.D,
         });
-
 
         // collisions
         // collider : 충돌 -> 바운스
@@ -209,19 +209,16 @@ class PlayingScene extends Phaser.Scene {
     }
 
     movePlayerManager() {
-        // console.log(this.player.x, this.player.y);
         if (this.m_cursorKeys.left.isDown || this.m_wasdKeys.left.isDown) {
-            this.m_player.x -= gameSettings.playerSpeed;
-            this.m_player.flipX = true;
+            this.m_player.move(Direction.Left);
         } else if (this.m_cursorKeys.right.isDown || this.m_wasdKeys.right.isDown) {
-            this.m_player.x += gameSettings.playerSpeed;
-            this.m_player.flipX = false;
+            this.m_player.move(Direction.Right);
         }
 
         if (this.m_cursorKeys.up.isDown || this.m_wasdKeys.up.isDown) {
-            this.m_player.y -= gameSettings.playerSpeed;
+            this.m_player.move(Direction.Up);
         } else if (this.m_cursorKeys.down.isDown || this.m_wasdKeys.down.isDown) {
-            this.m_player.y += gameSettings.playerSpeed;
+            this.m_player.move(Direction.Down);
         }
     }
 
