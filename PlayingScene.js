@@ -32,8 +32,13 @@ class PlayingScene extends Phaser.Scene {
         this.m_background.setOrigin(0,0);
 
         // score
+        const graphics = this.add.graphics();
+        graphics.fillStyle(0x28288C);
+        graphics.fillRect(0, 0, config.width, 30);
+        graphics.setDepth(90);
+        graphics.setScrollFactor(0);
         this.m_score = 0;
-        this.m_scoreLabel = this.add.bitmapText(0, 0, "pixelFont", `SCORE ${this.m_score.toString().padStart(6, '0')}`, 16);
+        this.m_scoreLabel = this.add.bitmapText(0, 0, "pixelFont", ` SCORE ${this.m_score.toString().padStart(6, '0')}`, 40);
         this.m_scoreLabel.setScrollFactor(0);
         this.m_scoreLabel.setDepth(100);
 
