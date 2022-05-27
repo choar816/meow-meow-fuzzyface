@@ -1,7 +1,3 @@
-const gameSettings = {
-  playerSpeed: 3,
-}
-
 const config = {
   // 맵 크기
   width: 800,

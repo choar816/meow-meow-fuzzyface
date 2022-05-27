@@ -8,11 +8,11 @@ const Direction = Object.freeze({
 class Player extends Phaser.Physics.Arcade.Image {
     static PLAYER_SPEED = 5;
 
-    constructor(scene) {
+    constructor(scene, frame) {
         let x = 250;
         let y = 250;
-        super(scene, x, y, "player");
-        // this.scale = 0.2;
+        super(scene, x, y, "player", frame);
+        this.scale = 0.2;
     }
 
     update() {

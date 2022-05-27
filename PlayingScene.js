@@ -4,11 +4,6 @@ class PlayingScene extends Phaser.Scene {
     }
 
     create() {
-        // score
-        this.m_score = 0;
-        this.m_scoreLabel = this.add.bitmapText(0, 0, "pixelFont", `SCORE ${this.m_score.toString().padStart(6, '0')}`, 16);
-        this.m_scoreLabel.setScrollFactor(0);
-
         // sound
         this.sound.pauseOnBlur = false;
         this.m_beamSound = this.sound.add("audio_beam");
@@ -35,6 +30,12 @@ class PlayingScene extends Phaser.Scene {
         // background
         this.m_background = this.add.tileSprite(0, 0, config.width, config.height, "background");
         this.m_background.setOrigin(0,0);
+
+        // score
+        this.m_score = 0;
+        this.m_scoreLabel = this.add.bitmapText(0, 0, "pixelFont", `SCORE ${this.m_score.toString().padStart(6, '0')}`, 16);
+        this.m_scoreLabel.setScrollFactor(0);
+        this.m_scoreLabel.setDepth(100);
 
         // enemies
         this.m_ships = this.physics.add.group();
@@ -94,7 +95,7 @@ class PlayingScene extends Phaser.Scene {
         }
 
         // player
-        this.m_player = this.physics.add.existing(new Player(this));
+        this.m_player = this.physics.add.existing(new Player(this, "player"));
         // this.m_player = this.physics.add.image(250, 250, "player");
         // this.m_player.scale = 0.2;
         this.m_player.setCollideWorldBounds(true);

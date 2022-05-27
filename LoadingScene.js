@@ -27,7 +27,7 @@ class LoadingScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         });
-        this.load.image("cat", "assets/images/cat-rainbow.png");
+        this.load.image("player", "assets/images/cat-rainbow.png");
 
         this.load.spritesheet("beam", "assets/spritesheets/beam.png", {
             frameWidth: 16,
