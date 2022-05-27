@@ -1,4 +1,4 @@
-var gameSettings = {
+const gameSettings = {
   playerSpeed: 3,
 }
 

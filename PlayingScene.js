@@ -12,7 +12,7 @@ class PlayingScene extends Phaser.Scene {
         this.pickupSound = this.sound.add("audio_pickup");
 
         this.music = this.sound.add("music");
-        var musicConfig = {
+        const musicConfig = {
             mute: false,
             volume: 0.7,
             rate: 1,
@@ -23,7 +23,7 @@ class PlayingScene extends Phaser.Scene {
         };
         this.music.play(musicConfig);
 
-        var camera = this.cameras.main;
+        const camera = this.cameras.main;
         this.cameras.addExisting(camera);
         this.cameras.main.setZoom(1);
         // console.log(camera.x, camera.y);
@@ -54,9 +54,9 @@ class PlayingScene extends Phaser.Scene {
 
         this.powerUps = this.physics.add.group();
 
-        var maxObjects = 4;
-        for (var i=0; i<=maxObjects; i++) {
-            var powerUp = this.physics.add.sprite(16, 16, "power-up");
+        let maxObjects = 4;
+        for (let i=0; i<=maxObjects; i++) {
+            const powerUp = this.physics.add.sprite(16, 16, "power-up");
             this.powerUps.add(powerUp);
             powerUp.setRandomPosition(0, 0, game.config.width, game.config.height);
 
@@ -108,7 +108,7 @@ class PlayingScene extends Phaser.Scene {
 
     resetShipPos(ship) {
         ship.y = 0;
-        var randomX = Phaser.Math.Between(0, config.width);
+        const randomX = Phaser.Math.Between(0, config.width);
         ship.x = randomX;
     }
 
@@ -118,10 +118,14 @@ class PlayingScene extends Phaser.Scene {
     }
 
     pickPowerUp(player, powerUp) {
-        // parameter 1 : make it inactive
-        // parameter 2 : hide it from the display list
+        /*
+        disableBody
+        parameter 1 : make it inactive
+        parameter 2 : hide it from the display list
+        */
         powerUp.disableBody(true, true);
         this.pickupSound.play();
+        powerUp.destroy();
     }
 
     hurtPlayer(player, enemy) {
