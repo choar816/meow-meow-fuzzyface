@@ -2,12 +2,13 @@ class HealthBar extends Phaser.GameObjects.Graphics {
     constructor(scene, player) {
         super(scene);
 
-        this.m_x = player.x;
-        this.m_y = player.y;
+        this.m_x = player.x + 105;
+        this.m_y = player.y + 70;
         this.m_value = 100;
         this.m_p = 76 / 100;
         this.draw();
         this.setScrollFactor(0);
+
         scene.add.existing(this);
     }
 
@@ -24,11 +25,11 @@ class HealthBar extends Phaser.GameObjects.Graphics {
     draw() {
         this.clear();
 
-        //  BG
+        // BG
         this.fillStyle(0x000000);
         this.fillRect(this.m_x, this.m_y, 80, 16);
 
-        //  Health
+        // Health
         this.fillStyle(0xffffff);
         this.fillRect(this.m_x + 2, this.m_y + 2, 76, 12);
 
