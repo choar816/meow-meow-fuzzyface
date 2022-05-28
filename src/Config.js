@@ -1,6 +1,6 @@
-import LoadingScene from "./LoadingScene";
-import MainScene from "./MainScene";
-import PlayingScene from "./PlayingScene";
+import LoadingScene from "./scenes/LoadingScene";
+import MainScene from "./scenes/MainScene";
+import PlayingScene from "./scenes/PlayingScene";
 
 const Config = {
     // 맵 크기

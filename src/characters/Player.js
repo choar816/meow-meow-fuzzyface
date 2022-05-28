@@ -1,6 +1,6 @@
-import HealthBar from "./healthBar";
-import Beam from "./beam";
-import Explosion from "./explosion";
+import HpBar from "../ui/HpBar";
+import Beam from "../effects/Beam";
+import Explosion from "../effects/Explosion";
 
 export const Direction = Object.freeze({
     Up: 'Up',
@@ -18,7 +18,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         super(scene, x, y, "cat");
         this.scale = 0.2;
         this.alpha = 1;
-        this.hp = new HealthBar(scene, this);
+        this.hp = new HpBar(scene, this);
 
         scene.add.existing(this);
         scene.physics.add.existing(this);

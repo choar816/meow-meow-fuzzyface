@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
-import ExperienceBar from "./experienceBar";
-import Player, {Direction} from "./player";
-import Explosion from "./explosion";
-import Config from "./Config";
+import ExpBar from "../ui/ExpBar";
+import Player, {Direction} from "../characters/Player";
+import Explosion from "../effects/Explosion";
+import Config from "../Config";
 
 export default class PlayingScene extends Phaser.Scene {
     constructor() {
@@ -50,7 +50,7 @@ export default class PlayingScene extends Phaser.Scene {
         this.m_scoreLabel.setScrollFactor(0);
         this.m_scoreLabel.setDepth(100);
 
-        new ExperienceBar(this);
+        new ExpBar(this);
 
         // enemies
         this.m_ships = this.physics.add.group();

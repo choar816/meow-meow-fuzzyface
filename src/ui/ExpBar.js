@@ -1,6 +1,6 @@
-import Config from "./Config";
+import Config from "../Config";
 
-export default class ExperienceBar extends Phaser.GameObjects.Graphics {
+export default class ExpBar extends Phaser.GameObjects.Graphics {
     constructor(scene) {
         super(scene);
 

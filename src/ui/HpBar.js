@@ -1,4 +1,4 @@
-export default class HealthBar extends Phaser.GameObjects.Graphics {
+export default class HpBar extends Phaser.GameObjects.Graphics {
     constructor(scene, player) {
         super(scene);
 

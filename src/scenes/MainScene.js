@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import Button from "./Button";
+import Button from "../ui/Button";
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
