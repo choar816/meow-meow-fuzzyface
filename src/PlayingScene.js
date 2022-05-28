@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import ExperienceBar from "./experienceBar";
 import Player, {Direction} from "./player";
 import Explosion from "./explosion";
+import game from "./index";
 
 export default class PlayingScene extends Phaser.Scene {
     constructor() {
@@ -35,13 +36,13 @@ export default class PlayingScene extends Phaser.Scene {
         this.cameras.main.setZoom(1);
 
         // background
-        this.m_background = this.add.tileSprite(0, 0, config.width, config.height, "background");
+        this.m_background = this.add.tileSprite(0, 0, game.config.width, game.config.height, "background");
         this.m_background.setOrigin(0, 0);
 
         // score
         const graphics = this.add.graphics();
         graphics.fillStyle(0x28288C);
-        graphics.fillRect(0, 0, config.width, 30);
+        graphics.fillRect(0, 0, game.config.width, 30);
         graphics.setDepth(90);
         graphics.setScrollFactor(0);
         this.m_score = 0;
@@ -133,14 +134,14 @@ export default class PlayingScene extends Phaser.Scene {
 
     moveShip(ship, speed) {
         ship.y += speed;
-        if (ship.y > config.height) {
+        if (ship.y > game.config.height) {
             this.resetShipPos(ship);
         }
     }
 
     resetShipPos(ship) {
         ship.y = 0;
-        ship.x = Phaser.Math.Between(0, config.width);
+        ship.x = Phaser.Math.Between(0, game.config.width);
     }
 
     destroyShip(pointer, gameObject) {
