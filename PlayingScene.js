@@ -84,7 +84,7 @@ class PlayingScene extends Phaser.Scene {
         this.m_powerUps = this.physics.add.group();
 
         let maxObjects = 4;
-        for (let i=0; i<=maxObjects; i++) {
+        for (let i=0; i<maxObjects; i++) {
             const powerUp = this.physics.add.sprite(16, 16, "power-up");
             this.m_powerUps.add(powerUp);
             powerUp.setRandomPosition(0, 0, game.config.width, game.config.height);
@@ -94,9 +94,7 @@ class PlayingScene extends Phaser.Scene {
             } else {
                 powerUp.play("gray");
             }
-            powerUp.setVelocity(100, 100);
-            powerUp.setCollideWorldBounds(true);
-            powerUp.setBounce(1);
+            // powerUp.setCollideWorldBounds(true);
         }
 
         // player
