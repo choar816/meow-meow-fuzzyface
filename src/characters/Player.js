@@ -13,12 +13,10 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     static PLAYER_SPEED = 5;
 
     constructor(scene) {
-        let x = 250;
-        let y = 250;
-        super(scene, x, y, "cat");
+        super(scene, 250, 250, "cat");
         this.scale = 0.2;
         this.alpha = 1;
-        this.hp = new HpBar(scene, this);
+        this.m_hpBar = new HpBar(scene, this);
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -42,8 +40,8 @@ export default class Player extends Phaser.Physics.Arcade.Image {
 
         this.scene.m_hurtSound.play();
         console.log(`HIT! damage: ${damage}`);
-        this.hp.decrease(damage);
-        if (this.hp.m_value <= 0) {
+        this.m_hpBar.decrease(damage);
+        if (this.m_hpBar.m_value <= 0) {
             // 게임오버!
             this.scene.m_gameoverSound.play();
             this.scene.scene.start("mainScene");  // 이거 맞냐?
@@ -104,6 +102,6 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     }
 
     gainPower(amount) {
-        this.hp.increase(amount);
+        this.m_hpBar.increase(amount);
     }
 }
