@@ -39,6 +39,7 @@ class LoadingScene extends Phaser.Scene {
         this.load.audio("audio_explosion", ["assets/sounds/pop.ogg", "assets/sounds/pop.mp3"]);
         this.load.audio("audio_pickup", ["assets/sounds/pickPowerUp.ogg", "assets/sounds/pickPowerUp.mp3"]);
         this.load.audio("audio_hurt", ["assets/sounds/hurt.ogg", "assets/sounds/hurt.mp3"]);
+        this.load.audio("audio_gameover", ["assets/sounds/gameover.ogg", "assets/sounds/gameover.mp3"]);
         this.load.audio("music", ["assets/sounds/lofi-bgm.ogg", "assets/sounds/lofi-bgm.mp3"]);
     }
 
