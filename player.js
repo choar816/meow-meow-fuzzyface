@@ -13,10 +13,10 @@ class Player extends Phaser.Physics.Arcade.Image {
         let y = 250;
         super(scene, x, y, "cat");
         this.scale = 0.2;
+        this.hp = new HealthBar(scene, this);
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
-        this.hp = new HealthBar(scene, this);
 
         // physics
         this.setCollideWorldBounds(true);

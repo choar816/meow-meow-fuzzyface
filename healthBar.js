@@ -27,11 +27,11 @@ class HealthBar extends Phaser.GameObjects.Graphics {
 
         // BG
         this.fillStyle(0x000000);
-        this.fillRect(this.m_x, this.m_y, 80, 16);
+        this.fillRect(this.m_x, this.m_y, 80, 12);
 
         // Health
         this.fillStyle(0xffffff);
-        this.fillRect(this.m_x + 2, this.m_y + 2, 76, 12);
+        this.fillRect(this.m_x + 2, this.m_y + 2, 76, 8);
 
         if (this.m_value < 30) {
             this.fillStyle(0xff0000);
@@ -41,6 +41,6 @@ class HealthBar extends Phaser.GameObjects.Graphics {
 
         let d = Math.floor(this.m_p * this.m_value);
 
-        this.fillRect(this.m_x + 2, this.m_y + 2, d, 12);
+        this.fillRect(this.m_x + 2, this.m_y + 2, d, 8);
     }
 }

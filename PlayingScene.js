@@ -160,7 +160,6 @@ class PlayingScene extends Phaser.Scene {
         this.resetShipPos(enemy);
         this.m_score += 15;
         this.m_scoreLabel.text = "SCORE " + this.m_score.toString().padStart(6, '0');
-        console.log(this.m_score);
         this.m_explosionSound.play();
     }
 
