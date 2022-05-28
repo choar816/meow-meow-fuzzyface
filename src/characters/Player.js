@@ -17,13 +17,14 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         this.scale = 0.2;
         this.alpha = 1;
         this.m_hpBar = new HpBar(scene, this);
+        this.m_isPaused = false;
+        this.m_beams = new Set();
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
         // physics
         this.setCollideWorldBounds(true);
-
         this.m_intervals = new Set();
         this.m_intervals.add(setInterval(this.shootBeam.bind(this), 1000));
     }
@@ -76,6 +77,9 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     }
 
     move(direction) {
+        if (this.m_isPaused)
+            return;
+
         switch (direction) {
             case Direction.Up:
                 this.y -= Player.PLAYER_SPEED;
@@ -98,7 +102,8 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     }
 
     shootBeam() {
-        const beam = new Beam(this.scene, this);
+        // const beam = new Beam(this.scene, this);
+        this.m_beams.add(new Beam(this.scene, this));
     }
 
     gainPower(amount) {

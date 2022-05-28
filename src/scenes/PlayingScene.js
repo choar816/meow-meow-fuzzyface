@@ -212,10 +212,18 @@ export default class PlayingScene extends Phaser.Scene {
         }
 
         // TODO : startPause, endPause 구현 - player, enemy 움직임 설정
-        // if (this.m_isPaused) {
-        //     this.startPause();
-        // } else {
-        //     this.endPause();
-        // }
+        if (this.m_isPaused) {
+            this.startPause();
+        } else {
+            this.endPause();
+        }
+    }
+
+    startPause() {
+        this.m_player.m_isPaused = true;
+    }
+
+    endPause() {
+        this.m_player.m_isPaused = false;
     }
 }

@@ -19,4 +19,11 @@ export default class Beam extends Phaser.GameObjects.Sprite {
             this.destroy();
         }
     }
+
+    // stop() {
+    //     this.body.velocity.y = 0;
+    // }
+    // resume() {
+    //     this.body.velocity.y = -250;
+    // }
 }
