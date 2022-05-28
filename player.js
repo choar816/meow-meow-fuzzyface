@@ -37,6 +37,11 @@ class Player extends Phaser.Physics.Arcade.Image {
 
         console.log(`HIT! damage: ${damage}`);
         this.hp.decrease(damage);
+        if (this.hp.m_value <= 0) {
+            // 게임오버!
+            this.scene.scene.start("mainScene");  // 이거 맞냐?
+        }
+
         const explosion = new Explosion(this.scene, this.x, this.y);
         this.disableBody(true, false);
         this.alpha = 0.5;
