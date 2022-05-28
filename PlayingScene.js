@@ -147,6 +147,7 @@ class PlayingScene extends Phaser.Scene {
         parameter 2 : hide it from the display list
         */
         powerUp.disableBody(true, true);
+        player.gainPower(10);
         this.m_pickupSound.play();
         powerUp.destroy();
     }

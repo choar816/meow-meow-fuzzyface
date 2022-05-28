@@ -12,6 +12,14 @@ class HealthBar extends Phaser.GameObjects.Graphics {
         scene.add.existing(this);
     }
 
+    increase(amount) {
+        this.m_value += amount;
+        if (this.m_value > 100) {
+            this.m_value = 100;
+        }
+        this.draw();
+    }
+
     decrease(amount) {
         this.m_value -= amount;
         if (this.m_value < 0) {

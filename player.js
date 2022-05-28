@@ -90,4 +90,8 @@ class Player extends Phaser.Physics.Arcade.Image {
         const beam = new Beam(this.scene, this);
         // this.scene.m_beamSound.play();
     }
+
+    gainPower(amount) {
+        this.hp.increase(amount);
+    }
 }
