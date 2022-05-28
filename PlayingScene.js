@@ -135,8 +135,7 @@ class PlayingScene extends Phaser.Scene {
 
     resetShipPos(ship) {
         ship.y = 0;
-        const randomX = Phaser.Math.Between(0, config.width);
-        ship.x = randomX;
+        ship.x = Phaser.Math.Between(0, config.width);
     }
 
     destroyShip(pointer, gameObject) {
