@@ -42,6 +42,8 @@ class PlayingScene extends Phaser.Scene {
         this.m_scoreLabel.setScrollFactor(0);
         this.m_scoreLabel.setDepth(100);
 
+        new ExperienceBar(this);
+
         // enemies
         this.m_ships = this.physics.add.group();
         this.m_ships1 = this.add.sprite(10, 10, "ship");
