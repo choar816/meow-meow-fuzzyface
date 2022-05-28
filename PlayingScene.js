@@ -9,6 +9,7 @@ class PlayingScene extends Phaser.Scene {
         this.m_beamSound = this.sound.add("audio_beam");
         this.m_explosionSound = this.sound.add("audio_explosion");
         this.m_pickupSound = this.sound.add("audio_pickup");
+        this.m_hurtSound = this.sound.add("audio_hurt");
 
         this.m_music = this.sound.add("music");
         const musicConfig = {

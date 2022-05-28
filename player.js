@@ -35,6 +35,7 @@ class Player extends Phaser.Physics.Arcade.Image {
         if (this.alpha < 1)
             return;
 
+        this.scene.m_hurtSound.play();
         console.log(`HIT! damage: ${damage}`);
         this.hp.decrease(damage);
         if (this.hp.m_value <= 0) {
@@ -93,7 +94,7 @@ class Player extends Phaser.Physics.Arcade.Image {
 
     shootBeam() {
         const beam = new Beam(this.scene, this);
-        // this.scene.m_beamSound.play();
+        this.scene.m_beamSound.play();
     }
 
     gainPower(amount) {

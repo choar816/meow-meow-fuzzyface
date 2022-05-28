@@ -35,9 +35,10 @@ class LoadingScene extends Phaser.Scene {
         });
 
         this.load.bitmapFont("pixelFont", "assets/font/font.png", "assets/font/font.xml");
-        this.load.audio("audio_beam", ["assets/sounds/beam.ogg", "assets/sounds/beam.mp3"]);
-        this.load.audio("audio_explosion", ["assets/sounds/explosion.ogg", "assets/sounds/explosion.mp3"]);
-        this.load.audio("audio_pickup", ["assets/sounds/pickup.ogg", "assets/sounds/pickup.mp3"]);
+        this.load.audio("audio_beam", ["assets/sounds/hit.ogg", "assets/sounds/hit.mp3"]);
+        this.load.audio("audio_explosion", ["assets/sounds/pop.ogg", "assets/sounds/pop.mp3"]);
+        this.load.audio("audio_pickup", ["assets/sounds/pickPowerUp.ogg", "assets/sounds/pickPowerUp.mp3"]);
+        this.load.audio("audio_hurt", ["assets/sounds/hurt.ogg", "assets/sounds/hurt.mp3"]);
         this.load.audio("music", ["assets/sounds/lofi-bgm.ogg", "assets/sounds/lofi-bgm.mp3"]);
     }
 
