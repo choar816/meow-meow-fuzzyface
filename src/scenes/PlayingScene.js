@@ -11,6 +11,10 @@ export default class PlayingScene extends Phaser.Scene {
     }
 
     create() {
+        // pause
+        this.createPauseScreen();
+        this.m_isPaused = false;
+
         // sound
         this.sound.pauseOnBlur = false;
         this.m_beamSound = this.sound.add("audio_beam");
@@ -157,6 +161,7 @@ export default class PlayingScene extends Phaser.Scene {
 
         // this.background.tilePositionX -= 0.5;
         this.movePlayerManager();
+        this.handlePause();
 
         for (let i = 0; i < this.m_projectiles.getChildren().length; ++i) {
             const beam = this.m_projectiles.getChildren()[i];
@@ -176,5 +181,41 @@ export default class PlayingScene extends Phaser.Scene {
         } else if (this.m_cursorKeys.down.isDown || this.m_wasdKeys.down.isDown) {
             this.m_player.move(Direction.Down);
         }
+    }
+
+    createPauseScreen() {
+        // Transparent dark veil
+        this.m_veil = this.add.graphics({x:0, y:0});
+        this.m_veil.fillStyle(0x000000, 0.3);
+        this.m_veil.fillRect(0, 0, Config.width, Config.height);
+        this.m_veil.setDepth(110);
+        this.m_veil.setScrollFactor(0);
+
+        // Pause text
+        this.m_textPause = this.add.text(Config.width / 2, Config.height / 2, 'Pause');
+        this.m_textPause.setDepth(120);
+        this.m_textPause.setScrollFactor(0);
+
+        // Hide at start
+        this.togglePauseScreen(false);
+    }
+
+    togglePauseScreen(isVisible) {
+        this.m_veil.setVisible(isVisible);
+        this.m_textPause.setVisible(isVisible);
+    }
+
+    handlePause() {
+        if (Phaser.Input.Keyboard.JustDown(this.m_spacebar)) {
+            this.m_isPaused = !this.m_isPaused;
+            this.togglePauseScreen(this.m_isPaused);
+        }
+
+        // TODO : startPause, endPause 구현 - player, enemy 움직임 설정
+        // if (this.m_isPaused) {
+        //     this.startPause();
+        // } else {
+        //     this.endPause();
+        // }
     }
 }
