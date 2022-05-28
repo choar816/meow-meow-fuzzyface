@@ -8,6 +8,8 @@ class Beam extends Phaser.GameObjects.Sprite {
         scene.physics.world.enableBody(this);
         this.body.velocity.y = -250;
         scene.m_projectiles.add(this);
+
+        scene.m_beamSound.play();
     }
 
     update() {
