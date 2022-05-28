@@ -1,4 +1,6 @@
 import HealthBar from "./healthBar";
+import Beam from "./beam";
+import Explosion from "./explosion";
 
 export const Direction = Object.freeze({
     Up: 'Up',

@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import ExperienceBar from "./experienceBar";
 import Player, {Direction} from "./player";
 import Explosion from "./explosion";
-import game from "./index";
+import Config from "./Config";
 
 export default class PlayingScene extends Phaser.Scene {
     constructor() {
@@ -36,13 +36,13 @@ export default class PlayingScene extends Phaser.Scene {
         this.cameras.main.setZoom(1);
 
         // background
-        this.m_background = this.add.tileSprite(0, 0, game.config.width, game.config.height, "background");
+        this.m_background = this.add.tileSprite(0, 0, Config.width, Config.height, "background");
         this.m_background.setOrigin(0, 0);
 
         // score
         const graphics = this.add.graphics();
         graphics.fillStyle(0x28288C);
-        graphics.fillRect(0, 0, game.config.width, 30);
+        graphics.fillRect(0, 0, Config.width, 30);
         graphics.setDepth(90);
         graphics.setScrollFactor(0);
         this.m_score = 0;
@@ -63,9 +63,9 @@ export default class PlayingScene extends Phaser.Scene {
         this.m_ships.add(this.m_ships3);
         this.m_ships.add(this.m_ships4);
 
-        this.m_ship1 = this.add.sprite(config.width / 2 - 50, config.height / 2, "ship");
-        this.m_ship2 = this.add.sprite(config.width / 2, config.height / 2, "ship2");
-        this.m_ship3 = this.add.sprite(config.width / 2 + 50, config.height / 2, "ship3");
+        this.m_ship1 = this.add.sprite(Config.width / 2 - 50, Config.height / 2, "ship");
+        this.m_ship2 = this.add.sprite(Config.width / 2, Config.height / 2, "ship2");
+        this.m_ship3 = this.add.sprite(Config.width / 2 + 50, Config.height / 2, "ship3");
 
         this.m_enemies = this.physics.add.group();
         this.m_enemies.add(this.m_ship1);
@@ -97,7 +97,7 @@ export default class PlayingScene extends Phaser.Scene {
         for (let i = 0; i < maxObjects; i++) {
             const powerUp = this.physics.add.sprite(16, 16, "power-up");
             this.m_powerUps.add(powerUp);
-            powerUp.setRandomPosition(0, 0, game.config.width, game.config.height);
+            powerUp.setRandomPosition(0, 0, Config.width, Config.height);
 
             if (Math.random() > 0.5) {
                 powerUp.play("red");
@@ -134,14 +134,14 @@ export default class PlayingScene extends Phaser.Scene {
 
     moveShip(ship, speed) {
         ship.y += speed;
-        if (ship.y > game.config.height) {
+        if (ship.y > Config.height) {
             this.resetShipPos(ship);
         }
     }
 
     resetShipPos(ship) {
         ship.y = 0;
-        ship.x = Phaser.Math.Between(0, game.config.width);
+        ship.x = Phaser.Math.Between(0, Config.width);
     }
 
     destroyShip(pointer, gameObject) {

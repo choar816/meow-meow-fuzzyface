@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-class Beam extends Phaser.GameObjects.Sprite {
+export default class Beam extends Phaser.GameObjects.Sprite {
     constructor(scene, player) {
         let x = player.x;
         let y = player.y - 16;
