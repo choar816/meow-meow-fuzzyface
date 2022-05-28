@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import Config from "../Config";
 import Button from "../ui/Button";
 
 export default class MainScene extends Phaser.Scene {
@@ -8,11 +9,14 @@ export default class MainScene extends Phaser.Scene {
 
     create() {
         const bg = this.add.graphics();
-        bg.fillStyle(0x00ff00);
-        bg.fillRect(0, 0, 1000, 1000);
+        bg.fillStyle(0xbbdefb);
+        bg.fillRect(0, 0, Config.width, Config.height);
         bg.setScrollFactor(0);
 
-        const startButton = new Button(0, 0, 'Start Game', this,
+        const title = this.add.text(Config.width / 2, 200, 'Meow Meow Fuzzyface', { fontSize: 40, align: 'center' }).setOrigin(0.5);
+
+
+        const startButton = new Button(Config.width / 2, Config.height / 2 + 50, 'Start Game', this,
             () => this.scene.start("playGame"),
         );
     }
