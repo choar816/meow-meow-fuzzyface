@@ -120,7 +120,7 @@ class PlayingScene extends Phaser.Scene {
         });
         // overlap : 접촉 -> 바운스 X
         this.physics.add.overlap(this.m_player, this.m_powerUps, this.pickPowerUp, null, this);
-        this.physics.add.overlap(this.m_player, this.m_enemies, () => this.m_player.hitByEnemy(123), null, this);
+        this.physics.add.overlap(this.m_player, this.m_enemies, () => this.m_player.hitByEnemy(10), null, this);
         this.physics.add.overlap(this.m_projectiles, this.m_enemies, this.hitEnemy, null, this);
     }
 

@@ -13,6 +13,7 @@ class Player extends Phaser.Physics.Arcade.Image {
         let y = 250;
         super(scene, x, y, "cat");
         this.scale = 0.2;
+        this.alpha = 1;
         this.hp = new HealthBar(scene, this);
 
         scene.add.existing(this);
@@ -35,8 +36,11 @@ class Player extends Phaser.Physics.Arcade.Image {
             return;
 
         console.log(`HIT! damage: ${damage}`);
+        this.hp.decrease(damage);
         const explosion = new Explosion(this.scene, this.x, this.y);
-        this.disableBody(true, true);
+        this.disableBody(true, false);
+        this.alpha = 0.5;
+        // 공격받은 후 1초 쿨타임
         this.scene.time.addEvent({
             delay: 1000,
             callback: this.resetPlayer,
@@ -46,14 +50,10 @@ class Player extends Phaser.Physics.Arcade.Image {
     }
 
     resetPlayer() {
-        const x = config.width / 2 - 8;
-        const y = config.height - 64;
-        this.enableBody(true, x, y, true, true);
-        this.alpha = 0.5;
+        this.enableBody(true, this.x, this.y, true, true);
 
         const tween = this.scene.tweens.add({
             targets: this,
-            y: config.height - 64,
             ease: 'Power1',
             duration: 1500,
             repeat: 0,
