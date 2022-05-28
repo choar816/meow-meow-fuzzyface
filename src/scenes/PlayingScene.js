@@ -3,6 +3,7 @@ import ExpBar from "../ui/ExpBar";
 import Player, {Direction} from "../characters/Player";
 import Explosion from "../effects/Explosion";
 import Config from "../Config";
+import Enemy from "../characters/Enemy";
 
 export default class PlayingScene extends Phaser.Scene {
     constructor() {
@@ -53,39 +54,22 @@ export default class PlayingScene extends Phaser.Scene {
         new ExpBar(this);
 
         // enemies
-        this.m_ships = this.physics.add.group();
-        this.m_ships1 = this.add.sprite(10, 10, "ship");
-        this.m_ships2 = this.add.sprite(10, 20, "ship");
-        this.m_ships3 = this.add.sprite(20, 10, "ship");
-        this.m_ships4 = this.add.sprite(20, 20, "ship");
-        this.m_ships.add(this.m_ships1);
-        this.m_ships.add(this.m_ships2);
-        this.m_ships.add(this.m_ships3);
-        this.m_ships.add(this.m_ships4);
-
-        this.m_ship1 = this.add.sprite(Config.width / 2 - 50, Config.height / 2, "ship");
-        this.m_ship2 = this.add.sprite(Config.width / 2, Config.height / 2, "ship2");
-        this.m_ship3 = this.add.sprite(Config.width / 2 + 50, Config.height / 2, "ship3");
+        this.m_ship1 = new Enemy(this, Config.width / 2 - 50, Config.height / 2, "ship", 20);
+        this.m_ship2 = new Enemy(this, Config.width / 2, Config.height / 2, "ship2", 20);
+        this.m_ship3 = new Enemy(this, Config.width / 2 + 50, Config.height / 2, "ship3", 20);
 
         this.m_enemies = this.physics.add.group();
         this.m_enemies.add(this.m_ship1);
         this.m_enemies.add(this.m_ship2);
         this.m_enemies.add(this.m_ship3);
-        Phaser.Actions.Call(this.m_ships.getChildren(), (ship) => {
-            this.m_enemies.add(ship);
-        }, this);
 
         this.m_ship1.play("ship1_anim");
         this.m_ship2.play("ship2_anim");
         this.m_ship3.play("ship3_anim");
-        // this.m_ships1.play("ship1_anim");
 
         this.m_ship1.setInteractive();
         this.m_ship2.setInteractive();
         this.m_ship3.setInteractive();
-        Phaser.Actions.Call(this.m_ships.getChildren(), (ship) => {
-            ship.setInteractive();
-        }, this);
 
         this.input.on('gameobjectdown', this.destroyShip, this);
         this.m_projectiles = this.add.group();
@@ -123,13 +107,13 @@ export default class PlayingScene extends Phaser.Scene {
 
         // collisions
         // collider : 충돌 -> 바운스
-        this.physics.add.collider(this.m_projectiles, this.m_powerUps, function (projectile, powerUp) {
-            projectile.destroy();
-        });
         // overlap : 접촉 -> 바운스 X
         this.physics.add.overlap(this.m_player, this.m_powerUps, this.pickPowerUp, null, this);
         this.physics.add.overlap(this.m_player, this.m_enemies, () => this.m_player.hitByEnemy(10), null, this);
-        this.physics.add.overlap(this.m_projectiles, this.m_enemies, this.hitEnemy, null, this);
+        // this.physics.add.overlap(this.m_projectiles, this.m_enemies, (projectile, enemy) => {
+        //     enemy.hit(projectile, 10);
+        // }, null, this);
+        this.physics.add.overlap(this.m_projectiles, this.m_enemies, null, null, this);
     }
 
     moveShip(ship, speed) {
@@ -161,25 +145,15 @@ export default class PlayingScene extends Phaser.Scene {
         powerUp.destroy();
     }
 
-    hitEnemy(projectile, enemy) {
-        const explosion = new Explosion(this, enemy.x, enemy.y);
-
-        projectile.destroy();
-        this.resetShipPos(enemy);
-        this.m_score += 15;
-        this.m_scoreLabel.text = "SCORE " + this.m_score.toString().padStart(6, '0');
-        this.m_explosionSound.play();
-    }
-
     update() {
         // 매 프레임마다 ?
         this.moveShip(this.m_ship1, 1);
         this.moveShip(this.m_ship2, 2);
         this.moveShip(this.m_ship3, 3);
 
-        Phaser.Actions.Call(this.m_ships.getChildren(), (ship) => {
-            this.moveShip(ship, 0.5);
-        }, this);
+        // Phaser.Actions.Call(this.m_ships.getChildren(), (ship) => {
+        //     this.moveShip(ship, 0.5);
+        // }, this);
 
         // this.background.tilePositionX -= 0.5;
         this.movePlayerManager();
