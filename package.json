@@ -4,7 +4,7 @@
   "description": "Vampire Survivors clone coding",
   "main": "src/index.js",
   "scripts": {
-    "build": "webpack --config webpack/prod.js ",
+    "build": "webpack --config webpack/prod.js",
     "start": "webpack-dev-server --config webpack/base.js --open"
   },
   "repository": {
@@ -26,6 +26,7 @@
     "@babel/preset-env": "^7.18.2",
     "babel-loader": "^8.2.5",
     "clean-webpack-plugin": "^4.0.0",
+    "dotenv-webpack": "^7.1.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "raw-loader": "^4.0.2",

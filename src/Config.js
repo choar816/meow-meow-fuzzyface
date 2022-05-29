@@ -1,6 +1,7 @@
 import LoadingScene from "./scenes/LoadingScene";
 import MainScene from "./scenes/MainScene";
 import PlayingScene from "./scenes/PlayingScene";
+// import 'dotenv/config';
 
 const Config = {
     // 맵 크기
@@ -12,7 +13,7 @@ const Config = {
     physics: {
         default: "arcade",
         arcade: {
-            debug: true,
+            debug: process.env.DEBUG === "true",
         },
     },
 };
