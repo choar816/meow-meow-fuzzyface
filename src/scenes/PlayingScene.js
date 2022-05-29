@@ -125,16 +125,6 @@ export default class PlayingScene extends Phaser.Scene {
         this.input.keyboard.on('keydown-ESC', () => {
             console.log("esc keydown handler!");
             global_pause("playGame");
-
-            // this.m_isPaused = !this.m_isPaused;
-            // // this.togglePauseScreen(this.m_isPaused);
-            //
-            // if (this.m_isPaused) {
-            //     this.scene.pause();
-            // } else {
-            //     this.scene.resume();
-            //     // this.scene.launch('playGame');
-            // }
         }, this);
     }
 
@@ -177,9 +167,7 @@ export default class PlayingScene extends Phaser.Scene {
         //     this.moveShip(ship, 0.5);
         // }, this);
 
-        // this.background.tilePositionX -= 0.5;
         this.movePlayerManager();
-        // this.handlePause();
 
         for (let i = 0; i < this.m_projectiles.getChildren().length; ++i) {
             const beam = this.m_projectiles.getChildren()[i];
@@ -221,37 +209,5 @@ export default class PlayingScene extends Phaser.Scene {
     togglePauseScreen(isVisible) {
         this.m_veil.setVisible(isVisible);
         this.m_textPause.setVisible(isVisible);
-    }
-
-    handlePause() {
-        // console.log("[handlePause]")
-        if (Phaser.Input.Keyboard.JustDown(this.m_spacebar)) {
-            console.log("스페이스바");
-            this.m_isPaused = !this.m_isPaused;
-            // this.togglePauseScreen(this.m_isPaused);
-
-            if (this.m_isPaused) {
-                this.scene.pause('playGame');
-            } else {
-                // this.scene.resume('playGame');
-                this.scene.launch('playGame');
-            }
-            return;
-        }
-
-        // TODO : startPause, endPause 구현 - player, enemy 움직임 설정
-        if (this.m_isPaused) {
-            this.startPause();
-        } else {
-            this.endPause();
-        }
-    }
-
-    startPause() {
-        this.m_player.m_isPaused = true;
-    }
-
-    endPause() {
-        this.m_player.m_isPaused = false;
     }
 }
