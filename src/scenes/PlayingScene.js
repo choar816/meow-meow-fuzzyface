@@ -4,6 +4,7 @@ import Player, {Direction} from "../characters/Player";
 import Explosion from "../effects/Explosion";
 import Config from "../Config";
 import Enemy from "../characters/Enemy";
+import global_pause from "../utils/pause";
 
 export default class PlayingScene extends Phaser.Scene {
     constructor() {
@@ -100,7 +101,7 @@ export default class PlayingScene extends Phaser.Scene {
         m_camera.startFollow(this.m_player);
 
         // keys
-        this.m_spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        // this.m_spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.m_cursorKeys = this.input.keyboard.createCursorKeys();
         this.m_wasdKeys = this.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -118,6 +119,23 @@ export default class PlayingScene extends Phaser.Scene {
         //     enemy.hit(projectile, 10);
         // }, null, this);
         this.physics.add.overlap(this.m_projectiles, this.m_enemies, null, null, this);
+
+        // event handler
+        // this.input.on('');
+        this.input.keyboard.on('keydown-ESC', () => {
+            console.log("esc keydown handler!");
+            global_pause("playGame");
+
+            // this.m_isPaused = !this.m_isPaused;
+            // // this.togglePauseScreen(this.m_isPaused);
+            //
+            // if (this.m_isPaused) {
+            //     this.scene.pause();
+            // } else {
+            //     this.scene.resume();
+            //     // this.scene.launch('playGame');
+            // }
+        }, this);
     }
 
     moveShip(ship, speed) {
@@ -161,7 +179,7 @@ export default class PlayingScene extends Phaser.Scene {
 
         // this.background.tilePositionX -= 0.5;
         this.movePlayerManager();
-        this.handlePause();
+        // this.handlePause();
 
         for (let i = 0; i < this.m_projectiles.getChildren().length; ++i) {
             const beam = this.m_projectiles.getChildren()[i];
@@ -206,9 +224,19 @@ export default class PlayingScene extends Phaser.Scene {
     }
 
     handlePause() {
+        // console.log("[handlePause]")
         if (Phaser.Input.Keyboard.JustDown(this.m_spacebar)) {
+            console.log("스페이스바");
             this.m_isPaused = !this.m_isPaused;
-            this.togglePauseScreen(this.m_isPaused);
+            // this.togglePauseScreen(this.m_isPaused);
+
+            if (this.m_isPaused) {
+                this.scene.pause('playGame');
+            } else {
+                // this.scene.resume('playGame');
+                this.scene.launch('playGame');
+            }
+            return;
         }
 
         // TODO : startPause, endPause 구현 - player, enemy 움직임 설정
