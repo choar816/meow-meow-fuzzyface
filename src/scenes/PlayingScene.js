@@ -193,7 +193,7 @@ export default class PlayingScene extends Phaser.Scene {
         this.m_veil.setScrollFactor(0);
 
         // Pause text
-        this.m_textPause = this.add.text(Config.width / 2, Config.height / 2, 'Pause');
+        this.m_textPause = this.add.text(Config.width / 2, Config.height / 2, 'Pause', { fontSize: 40 }).setOrigin(0.5);
         this.m_textPause.setDepth(120);
         this.m_textPause.setScrollFactor(0);
 
