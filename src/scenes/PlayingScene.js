@@ -109,6 +109,20 @@ export default class PlayingScene extends Phaser.Scene {
             console.log("esc keydown handler!");
             global_pause("playGame");
         }, this);
+
+        // Timers
+        this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                const randRad = Math.random() * Math.PI * 2;
+                const r = Math.sqrt(Config.width*Config.width + Config.height*Config.height) / 2;
+                const x = this.m_player.x + (r * Math.cos(randRad));
+                const y = this.m_player.y + (r * Math.sin(randRad));
+
+                this.m_enemies.add(new Enemy(this, x, y, "bat", "bat_anim", 20));
+            },
+            loop: true,
+        });
     }
 
     resetShipPos(ship) {
