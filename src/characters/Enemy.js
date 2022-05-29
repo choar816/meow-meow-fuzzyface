@@ -7,12 +7,21 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
+        this.m_speed = 50;
         this.m_hp = initHp;
 
         this.on("overlapstart", function(projectile) {
-            console.log("overlapstart!!")
             this.hit(projectile, 10);
         }.bind(this));
+
+        this.m_events = [];
+        this.m_events.push(this.scene.time.addEvent({
+            delay: 100,
+            callback: () => {
+                scene.physics.moveToObject(this, scene.m_player, this.m_speed);
+            },
+            loop: true,
+        }));
     }
 
     hit(projectile, damage) {
@@ -31,6 +40,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
             this.scene.m_scoreLabel.text = "SCORE " + this.scene.m_score.toString().padStart(6, '0');
             this.scene.m_explosionSound.play();
 
+            this.scene.time.removeEvent(this.m_events);
             this.destroy();
         }
     }

@@ -128,13 +128,6 @@ export default class PlayingScene extends Phaser.Scene {
         }, this);
     }
 
-    moveShip(ship, speed) {
-        ship.y += speed;
-        if (ship.y > Config.height) {
-            this.resetShipPos(ship);
-        }
-    }
-
     resetShipPos(ship) {
         ship.y = 0;
         ship.x = Phaser.Math.Between(0, Config.width);
@@ -153,15 +146,6 @@ export default class PlayingScene extends Phaser.Scene {
     }
 
     update() {
-        // 매 프레임마다 ?
-        this.moveShip(this.m_ship1, 1);
-        this.moveShip(this.m_ship2, 2);
-        this.moveShip(this.m_ship3, 3);
-
-        // Phaser.Actions.Call(this.m_ships.getChildren(), (ship) => {
-        //     this.moveShip(ship, 0.5);
-        // }, this);
-
         this.movePlayerManager();
 
         for (let i = 0; i < this.m_projectiles.getChildren().length; ++i) {
