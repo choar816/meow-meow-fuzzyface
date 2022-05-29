@@ -56,7 +56,7 @@ export default class PlayingScene extends Phaser.Scene {
 
         // enemies
         this.m_enemies = this.physics.add.group();
-        this.m_enemies.add(new Enemy(this, Config.width / 2 - 100, Config.height / 2, "bat", "bat_anim", 20));
+        this.m_enemies.add(new Enemy(this, Config.width / 2 - 100, Config.height / 2, "bat", "bat_anim", 10));
         this.m_enemies.add(new Enemy(this, Config.width / 2, Config.height / 2 + 100, "ship2", "ship2_anim", 20));
         this.m_enemies.add(new Enemy(this, Config.width / 2 + 100, Config.height / 2, "ship3", "ship3_anim", 20));
 
@@ -119,7 +119,7 @@ export default class PlayingScene extends Phaser.Scene {
                 const x = this.m_player.x + (r * Math.cos(randRad));
                 const y = this.m_player.y + (r * Math.sin(randRad));
 
-                this.m_enemies.add(new Enemy(this, x, y, "bat", "bat_anim", 20));
+                this.m_enemies.add(new Enemy(this, x, y, "bat", "bat_anim", 10));
             },
             loop: true,
         });
