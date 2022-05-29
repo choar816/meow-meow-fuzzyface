@@ -4,6 +4,8 @@ import Player, {Direction} from "../characters/Player";
 import Config from "../Config";
 import Enemy from "../characters/Enemy";
 import global_pause from "../utils/pause";
+import Button from "../ui/Button";
+import global_levelup from "../utils/levelup";
 
 export default class PlayingScene extends Phaser.Scene {
     constructor() {
@@ -12,7 +14,9 @@ export default class PlayingScene extends Phaser.Scene {
 
     create() {
         // pause
+        this.createVeil();
         this.createPauseScreen();
+        this.createLevelScreen();
 
         // sound
         this.sound.pauseOnBlur = false;
@@ -106,9 +110,11 @@ export default class PlayingScene extends Phaser.Scene {
         // event handler
         // this.input.on('');
         this.input.keyboard.on('keydown-ESC', () => {
-            console.log("esc keydown handler!");
             global_pause("playGame");
         }, this);
+        // this.input.keyboard.on('keydown-L', () => {
+        //     this.toggleLevelScreen(true);
+        // }, this);
 
         // Timers
         this.time.addEvent({
@@ -179,14 +185,29 @@ export default class PlayingScene extends Phaser.Scene {
         }
     }
 
-    createPauseScreen() {
+    createVeil() {
         // Transparent dark veil
         this.m_veil = this.add.graphics({x:0, y:0});
         this.m_veil.fillStyle(0x000000, 0.3);
         this.m_veil.fillRect(0, 0, Config.width, Config.height);
         this.m_veil.setDepth(110);
         this.m_veil.setScrollFactor(0);
+    }
 
+    createLevelScreen() {
+        this.m_levelBtn = new Button(0, 0, 'Go to Next Level', this, () => console.log('go to next level'));
+        this.m_levelBtn.setDepth(120);
+        this.m_levelBtn.setVisible(false);
+
+        this.toggleLevelScreen(false);
+    }
+
+    toggleLevelScreen(isVisible) {
+        this.m_veil.setVisible(isVisible);
+        this.m_levelBtn.setVisible(isVisible);
+    }
+
+    createPauseScreen() {
         // Pause text
         this.m_textPause = this.add.text(Config.width / 2, Config.height / 2, 'Pause', { fontSize: 40 }).setOrigin(0.5);
         this.m_textPause.setDepth(120);
