@@ -1,11 +1,19 @@
+import {clamp} from "../utils/math";
+
 export default class HpBar extends Phaser.GameObjects.Graphics {
-    constructor(scene, player) {
+
+    static WIDTH = 80;
+    static HEIGHT = 12;
+    static BORDER = 2;
+
+    constructor(scene, player, maxHp) {
         super(scene);
 
-        this.m_x = player.x + 105;
-        this.m_y = player.y + 70;
-        this.m_value = 100;
-        this.m_p = 76 / 100;
+        this.m_x = player.x - (HpBar.WIDTH / 2);
+        this.m_y = player.y + 30;
+
+        this.m_maxHp = maxHp;
+        this.m_currentHp = maxHp;
         this.draw();
         this.setScrollFactor(0);
 
@@ -13,21 +21,13 @@ export default class HpBar extends Phaser.GameObjects.Graphics {
     }
 
     increase(amount) {
-        this.m_value += amount;
-        if (this.m_value > 100) {
-            this.m_value = 100;
-        }
+        this.m_currentHp = clamp(this.m_currentHp + amount, 0, this.m_maxHp);
         this.draw();
     }
 
     decrease(amount) {
-        this.m_value -= amount;
-        if (this.m_value < 0) {
-            this.m_value = 0;
-        }
+        this.m_currentHp = clamp(this.m_currentHp - amount, 0, this.m_maxHp);
         this.draw();
-
-        return (this.m_value === 0);
     }
 
     draw() {
@@ -35,20 +35,21 @@ export default class HpBar extends Phaser.GameObjects.Graphics {
 
         // BG
         this.fillStyle(0x000000);
-        this.fillRect(this.m_x, this.m_y, 80, 12);
+        this.fillRect(this.m_x, this.m_y, HpBar.WIDTH, HpBar.HEIGHT);
 
         // Health
         this.fillStyle(0xffffff);
-        this.fillRect(this.m_x + 2, this.m_y + 2, 76, 8);
+        this.fillRect(this.m_x + HpBar.BORDER, this.m_y + HpBar.BORDER,
+            HpBar.WIDTH - 2 * HpBar.BORDER, HpBar.HEIGHT - 2 * HpBar.BORDER);
 
-        if (this.m_value < 30) {
+        if (this.m_currentHp < 30) {
             this.fillStyle(0xff0000);
         } else {
             this.fillStyle(0x00ff00);
         }
 
-        let d = Math.floor(this.m_p * this.m_value);
+        let d = Math.floor((HpBar.WIDTH - 2 * HpBar.BORDER) / 100 * this.m_currentHp);
 
-        this.fillRect(this.m_x + 2, this.m_y + 2, d, 8);
+        this.fillRect(this.m_x + HpBar.BORDER, this.m_y + HpBar.BORDER, d, HpBar.HEIGHT - 2 * HpBar.BORDER);
     }
 }

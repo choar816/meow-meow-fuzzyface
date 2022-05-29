@@ -16,8 +16,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         super(scene, 400, 300, "cat");
         this.scale = 0.2;
         this.alpha = 1;
-        this.m_hpBar = new HpBar(scene, this);
-        this.m_beams = new Set();
+        this.m_hpBar = new HpBar(scene, this, 100);
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -37,21 +36,20 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     }
 
     hitByEnemy(damage) {
-        // this.resetShipPos(enemy);
-
         if (this.alpha < 1)
             return;
 
         this.scene.m_hurtSound.play();
         console.log(`HIT! damage: ${damage}`);
         this.m_hpBar.decrease(damage);
-        if (this.m_hpBar.m_value <= 0) {
+        if (this.m_hpBar.m_currentHp <= 0) {
             // 게임오버!
             this.scene.m_gameoverSound.play();
             this.scene.scene.start("mainScene");  // 이거 맞냐?
         }
 
-        const explosion = new Explosion(this.scene, this.x, this.y);
+        new Explosion(this.scene, this.x, this.y);
+
         this.disableBody(true, false);
         this.alpha = 0.5;
         // 공격받은 후 1초 쿨타임
@@ -101,8 +99,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     }
 
     shootBeam() {
-        // const beam = new Beam(this.scene, this);
-        this.m_beams.add(new Beam(this.scene, this));
+        new Beam(this.scene, this);
     }
 
     gainPower(amount) {
