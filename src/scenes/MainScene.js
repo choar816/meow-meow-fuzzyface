@@ -15,7 +15,7 @@ export default class MainScene extends Phaser.Scene {
 
         this.add.text(Config.width / 2, 150, 'Meow Meow Fuzzyface', { fontSize: 40, align: 'center' }).setOrigin(0.5);
 
-        this.add.image(Config.width / 2, Config.width / 2 - 100, 'cat');
+        this.add.image(Config.width / 2, Config.height / 2, 'cat');
 
         const startButton = new Button(Config.width / 2, Config.height / 2 + 150, 'Start Game', this,
             () => this.scene.start("playGame"),
