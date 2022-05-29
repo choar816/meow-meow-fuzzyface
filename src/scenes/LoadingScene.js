@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import bgImg from '../assets/images/background.png';
-import ship1Img from '../assets/spritesheets/ship.png';
 import ship2Img from '../assets/spritesheets/ship2.png';
 import ship3Img from '../assets/spritesheets/ship3.png';
 import explosionImg from '../assets/spritesheets/explosion.png';
@@ -18,6 +17,7 @@ import bgmOgg from "../assets/sounds/lofi-bgm.ogg";
 import pauseIn from "../assets/sounds/pauseIn.ogg";
 import pauseOut from "../assets/sounds/pauseOut.ogg";
 import hitEnemyOgg from "../assets/sounds/hitEnemy.ogg";
+import batImg from "../assets/spritesheets/bat.png";
 
 export default class LoadingScene extends Phaser.Scene {
     constructor() {
@@ -27,7 +27,7 @@ export default class LoadingScene extends Phaser.Scene {
 
     preload() {
         this.load.image("background", bgImg);
-        this.load.spritesheet("ship", ship1Img, {
+        this.load.spritesheet("bat", batImg, {
             frameWidth: 16,
             frameHeight: 16
         });
@@ -71,9 +71,9 @@ export default class LoadingScene extends Phaser.Scene {
         this.scene.start("mainScene");
 
         this.anims.create({
-            key: "ship1_anim",
-            frames: this.anims.generateFrameNumbers("ship"),
-            frameRate: 20,
+            key: "bat_anim",
+            frames: this.anims.generateFrameNumbers("bat"),
+            frameRate: 12,
             repeat: -1
         });
         this.anims.create({

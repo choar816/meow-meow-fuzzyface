@@ -1,7 +1,7 @@
 import Explosion from "../effects/Explosion";
 
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, initHp) {
+    constructor(scene, x, y, texture, animKey, initHp) {
         super(scene, x, y, texture);
 
         scene.add.existing(this);
@@ -13,6 +13,10 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.on("overlapstart", function(projectile) {
             this.hit(projectile, 10);
         }.bind(this));
+
+        if (animKey) {
+            this.play(animKey);
+        }
 
         this.m_events = [];
         this.m_events.push(this.scene.time.addEvent({

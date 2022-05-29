@@ -55,22 +55,10 @@ export default class PlayingScene extends Phaser.Scene {
         new ExpBar(this);
 
         // enemies
-        this.m_ship1 = new Enemy(this, Config.width / 2 - 50, Config.height / 2, "ship", 20);
-        this.m_ship2 = new Enemy(this, Config.width / 2, Config.height / 2, "ship2", 20);
-        this.m_ship3 = new Enemy(this, Config.width / 2 + 50, Config.height / 2, "ship3", 20);
-
         this.m_enemies = this.physics.add.group();
-        this.m_enemies.add(this.m_ship1);
-        this.m_enemies.add(this.m_ship2);
-        this.m_enemies.add(this.m_ship3);
-
-        this.m_ship1.play("ship1_anim");
-        this.m_ship2.play("ship2_anim");
-        this.m_ship3.play("ship3_anim");
-
-        this.m_ship1.setInteractive();
-        this.m_ship2.setInteractive();
-        this.m_ship3.setInteractive();
+        this.m_enemies.add(new Enemy(this, Config.width / 2 - 100, Config.height / 2, "bat", "bat_anim", 20));
+        this.m_enemies.add(new Enemy(this, Config.width / 2, Config.height / 2 + 100, "ship2", "ship2_anim", 20));
+        this.m_enemies.add(new Enemy(this, Config.width / 2 + 100, Config.height / 2, "ship3", "ship3_anim", 20));
 
         this.m_projectiles = this.add.group();
 
