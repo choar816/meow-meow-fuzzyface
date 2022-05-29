@@ -17,7 +17,6 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         this.scale = 0.2;
         this.alpha = 1;
         this.m_hpBar = new HpBar(scene, this);
-        this.m_isPaused = false;
         this.m_beams = new Set();
 
         scene.add.existing(this);
@@ -81,9 +80,6 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     }
 
     move(direction) {
-        if (this.m_isPaused)
-            return;
-
         switch (direction) {
             case Direction.Up:
                 this.y -= Player.PLAYER_SPEED;

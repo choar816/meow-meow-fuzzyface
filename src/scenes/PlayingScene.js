@@ -14,7 +14,6 @@ export default class PlayingScene extends Phaser.Scene {
     create() {
         // pause
         this.createPauseScreen();
-        this.m_isPaused = false;
 
         // sound
         this.sound.pauseOnBlur = false;
@@ -76,7 +75,6 @@ export default class PlayingScene extends Phaser.Scene {
         this.m_ship2.setInteractive();
         this.m_ship3.setInteractive();
 
-        this.input.on('gameobjectdown', this.destroyShip, this);
         this.m_projectiles = this.add.group();
 
         // powerUp
@@ -138,11 +136,6 @@ export default class PlayingScene extends Phaser.Scene {
     resetShipPos(ship) {
         ship.y = 0;
         ship.x = Phaser.Math.Between(0, Config.width);
-    }
-
-    destroyShip(pointer, gameObject) {
-        gameObject.setTexture("explosion");
-        gameObject.play("explode");
     }
 
     pickPowerUp(player, powerUp) {
