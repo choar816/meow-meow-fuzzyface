@@ -123,6 +123,9 @@ export default class PlayingScene extends Phaser.Scene {
             },
             loop: true,
         });
+
+        /// TEMP AREA
+        this.m_gfx = this.add.graphics();
     }
 
     pickPowerUp(player, powerUp) {
@@ -150,6 +153,16 @@ export default class PlayingScene extends Phaser.Scene {
 
         this.m_background.tilePositionX = this.m_player.x - 400;
         this.m_background.tilePositionY = this.m_player.y - 300;
+
+        /// TEMP - closest
+        const closest = this.physics.closest(this.m_player, this.m_enemies.getChildren());
+        const furthest = this.physics.furthest(this.m_player, this.m_enemies.getChildren());
+
+        this.m_gfx.clear()
+            .lineStyle(2, 0xff3300)
+            .lineBetween(closest.x, closest.y, this.m_player.x, this.m_player.y)
+            .lineStyle(2, 0x0099ff)
+            .lineBetween(furthest.x, furthest.y, this.m_player.x, this.m_player.y);
     }
 
     movePlayerManager() {
