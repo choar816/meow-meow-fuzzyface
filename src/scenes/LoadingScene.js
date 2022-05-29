@@ -9,8 +9,8 @@ import catImg from '../assets/images/cat-rainbow.png';
 import beamImg from '../assets/spritesheets/beam.png';
 import fontPng from "../assets/font/font.png";
 import fontXml from "../assets/font/font.xml";
-import hitOgg from "../assets/sounds/hit.ogg";
-import hitMp3 from "../assets/sounds/hit.mp3";
+import fireOgg from "../assets/sounds/fire.ogg";
+import fireMp3 from "../assets/sounds/fire.mp3";
 import popOgg from "../assets/sounds/pop.ogg";
 import popMp3 from "../assets/sounds/pop.mp3";
 import pickOgg from "../assets/sounds/pickPowerUp.ogg";
@@ -58,7 +58,7 @@ export default class LoadingScene extends Phaser.Scene {
         });
 
         this.load.bitmapFont("pixelFont", fontPng, fontXml);
-        this.load.audio("audio_beam", [hitOgg, hitMp3]);
+        this.load.audio("audio_beam", [fireOgg, fireMp3]);
         this.load.audio("audio_explosion", [popOgg, popMp3]);
         this.load.audio("audio_pickup", [pickOgg, pickMp3]);
         this.load.audio("audio_hurt", [hurtOgg, hurtMp3]);

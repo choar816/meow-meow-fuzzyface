@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import ExpBar from "../ui/ExpBar";
 import Player, {Direction} from "../characters/Player";
-import Explosion from "../effects/Explosion";
 import Config from "../Config";
 import Enemy from "../characters/Enemy";
 import global_pause from "../utils/pause";
@@ -113,9 +112,10 @@ export default class PlayingScene extends Phaser.Scene {
         // overlap : 접촉 -> 바운스 X
         this.physics.add.overlap(this.m_player, this.m_powerUps, this.pickPowerUp, null, this);
         this.physics.add.overlap(this.m_player, this.m_enemies, () => this.m_player.hitByEnemy(10), null, this);
-        // this.physics.add.overlap(this.m_projectiles, this.m_enemies, (projectile, enemy) => {
-        //     enemy.hit(projectile, 10);
-        // }, null, this);
+        this.physics.add.overlap(this.m_projectiles, this.m_enemies, (projectile, enemy) => {
+            console.log("맞힘 ㅋ");
+            enemy.hit(projectile, 10);
+        }, null, this);
         this.physics.add.overlap(this.m_projectiles, this.m_enemies, null, null, this);
 
         // event handler

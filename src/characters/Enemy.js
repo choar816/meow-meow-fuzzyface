@@ -19,16 +19,16 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         console.log("hit!")
         this.m_hp -= damage;
 
+        // TODO: 관통 무기
+        projectile.destroy();
+        // this.resetShipPos(enemy);
+
         if (this.m_hp <= 0) {
             const explosion = new Explosion(this.scene, this.x, this.y);
 
-            // TODO: 관통 무기
-            projectile.destroy();
-            // this.resetShipPos(enemy);
-
             // TODO: 이런건 scene에서?
             this.scene.m_score += 15;
-            this.scene.m_scoreLabel.text = "SCORE " + this.m_score.toString().padStart(6, '0');
+            this.scene.m_scoreLabel.text = "SCORE " + this.scene.m_score.toString().padStart(6, '0');
             this.scene.m_explosionSound.play();
 
             this.destroy();
