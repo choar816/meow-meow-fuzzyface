@@ -37,11 +37,6 @@ export default class PlayingScene extends Phaser.Scene {
         };
         this.m_music.play(musicConfig);
 
-        // camera
-        const m_camera = this.cameras.main;
-        this.cameras.addExisting(m_camera);
-        this.cameras.main.setZoom(1);
-
         // background
         this.m_background = this.add.tileSprite(0, 0, Config.width, Config.height, "background");
         this.m_background.setOrigin(0, 0);
@@ -98,7 +93,7 @@ export default class PlayingScene extends Phaser.Scene {
 
         // player
         this.m_player = new Player(this);
-        m_camera.startFollow(this.m_player);
+        this.cameras.main.startFollow(this.m_player);
 
         // keys
         // this.m_spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -152,6 +147,12 @@ export default class PlayingScene extends Phaser.Scene {
             const beam = this.m_projectiles.getChildren()[i];
             beam.update();
         }
+
+        this.m_background.setX(this.m_player.x - 400);
+        this.m_background.setY(this.m_player.y - 300);
+
+        this.m_background.tilePositionX = this.m_player.x - 400;
+        this.m_background.tilePositionY = this.m_player.y - 300;
     }
 
     movePlayerManager() {

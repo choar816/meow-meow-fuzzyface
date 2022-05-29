@@ -13,7 +13,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     static PLAYER_SPEED = 5;
 
     constructor(scene) {
-        super(scene, 250, 250, "cat");
+        super(scene, 400, 300, "cat");
         this.scale = 0.2;
         this.alpha = 1;
         this.m_hpBar = new HpBar(scene, this);
@@ -23,7 +23,6 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         scene.physics.add.existing(this);
 
         // physics
-        this.setCollideWorldBounds(true);
         this.scene.time.addEvent({
             delay: 1000,
             callback: () => {
