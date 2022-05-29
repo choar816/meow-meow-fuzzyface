@@ -125,11 +125,6 @@ export default class PlayingScene extends Phaser.Scene {
         });
     }
 
-    resetShipPos(ship) {
-        ship.y = 0;
-        ship.x = Phaser.Math.Between(0, Config.width);
-    }
-
     pickPowerUp(player, powerUp) {
         /*
         disableBody
