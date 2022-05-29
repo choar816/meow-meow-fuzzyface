@@ -25,8 +25,13 @@ export default class Player extends Phaser.Physics.Arcade.Image {
 
         // physics
         this.setCollideWorldBounds(true);
-        this.m_intervals = new Set();
-        this.m_intervals.add(setInterval(this.shootBeam.bind(this), 1000));
+        this.scene.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                this.shootBeam();
+            },
+            loop: true,
+        });
     }
 
     update() {
@@ -46,7 +51,6 @@ export default class Player extends Phaser.Physics.Arcade.Image {
             // 게임오버!
             this.scene.m_gameoverSound.play();
             this.scene.scene.start("mainScene");  // 이거 맞냐?
-            this.m_intervals.forEach(id => clearInterval(id));
         }
 
         const explosion = new Explosion(this.scene, this.x, this.y);
