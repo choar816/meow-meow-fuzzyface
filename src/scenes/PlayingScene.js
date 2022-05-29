@@ -21,6 +21,9 @@ export default class PlayingScene extends Phaser.Scene {
         this.m_pickupSound = this.sound.add("audio_pickup");
         this.m_hurtSound = this.sound.add("audio_hurt");
         this.m_gameoverSound = this.sound.add("audio_gameover");
+        this.m_pauseInSound = this.sound.add("pause_in");
+        this.m_pauseOutSound = this.sound.add("pause_out");
+        this.m_hitEnemySound = this.sound.add("hit_enemy");
 
         this.m_music = this.sound.add("music");
         const musicConfig = {
@@ -113,7 +116,6 @@ export default class PlayingScene extends Phaser.Scene {
         this.physics.add.overlap(this.m_player, this.m_powerUps, this.pickPowerUp, null, this);
         this.physics.add.overlap(this.m_player, this.m_enemies, () => this.m_player.hitByEnemy(10), null, this);
         this.physics.add.overlap(this.m_projectiles, this.m_enemies, (projectile, enemy) => {
-            console.log("맞힘 ㅋ");
             enemy.hit(projectile, 10);
         }, null, this);
         this.physics.add.overlap(this.m_projectiles, this.m_enemies, null, null, this);

@@ -16,12 +16,12 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     hit(projectile, damage) {
-        console.log("hit!")
         this.m_hp -= damage;
 
         // TODO: 관통 무기
         projectile.destroy();
         // this.resetShipPos(enemy);
+        this.scene.m_hitEnemySound.play();
 
         if (this.m_hp <= 0) {
             const explosion = new Explosion(this.scene, this.x, this.y);

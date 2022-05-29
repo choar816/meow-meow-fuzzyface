@@ -11,6 +11,7 @@ export default function global_pause(scene) {
         global_scene_paused = scene;
 
         game.scene.getScene(scene).togglePauseScreen(true);
+        game.scene.getScene(scene).m_pauseInSound.play({volume: 0.2});
     }
 }
 
@@ -19,6 +20,7 @@ document.addEventListener('keydown', function(event) {
         game.scene.resume(global_scene_paused);
         console.log('+++++++++++ RESUME');
         game.scene.getScene(global_scene_paused).togglePauseScreen(false);
+        game.scene.getScene(global_scene_paused).m_pauseOutSound.play({volume: 0.2});
         global_scene_paused = false;
         global_time_paused = Date.now();
     }

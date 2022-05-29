@@ -10,17 +10,14 @@ import beamImg from '../assets/spritesheets/beam.png';
 import fontPng from "../assets/font/font.png";
 import fontXml from "../assets/font/font.xml";
 import fireOgg from "../assets/sounds/fire.ogg";
-import fireMp3 from "../assets/sounds/fire.mp3";
 import popOgg from "../assets/sounds/pop.ogg";
-import popMp3 from "../assets/sounds/pop.mp3";
 import pickOgg from "../assets/sounds/pickPowerUp.ogg";
-import pickMp3 from "../assets/sounds/pickPowerUp.mp3";
 import hurtOgg from "../assets/sounds/hurt.ogg";
-import hurtMp3 from "../assets/sounds/hurt.mp3";
 import gameoverOgg from "../assets/sounds/gameover.ogg";
-import gameoverMp3 from "../assets/sounds/gameover.mp3";
 import bgmOgg from "../assets/sounds/lofi-bgm.ogg";
-import bgmMp3 from "../assets/sounds/lofi-bgm.mp3";
+import pauseIn from "../assets/sounds/pauseIn.ogg";
+import pauseOut from "../assets/sounds/pauseOut.ogg";
+import hitEnemyOgg from "../assets/sounds/hitEnemy.ogg";
 
 export default class LoadingScene extends Phaser.Scene {
     constructor() {
@@ -58,12 +55,15 @@ export default class LoadingScene extends Phaser.Scene {
         });
 
         this.load.bitmapFont("pixelFont", fontPng, fontXml);
-        this.load.audio("audio_beam", [fireOgg, fireMp3]);
-        this.load.audio("audio_explosion", [popOgg, popMp3]);
-        this.load.audio("audio_pickup", [pickOgg, pickMp3]);
-        this.load.audio("audio_hurt", [hurtOgg, hurtMp3]);
-        this.load.audio("audio_gameover", [gameoverOgg, gameoverMp3]);
-        this.load.audio("music", [bgmOgg, bgmMp3]);
+        this.load.audio("audio_beam", fireOgg);
+        this.load.audio("audio_explosion", popOgg);
+        this.load.audio("audio_pickup", pickOgg);
+        this.load.audio("audio_hurt", hurtOgg);
+        this.load.audio("audio_gameover", gameoverOgg);
+        this.load.audio("music", bgmOgg);
+        this.load.audio("pause_in", pauseIn);
+        this.load.audio("pause_out", pauseOut);
+        this.load.audio("hit_enemy", hitEnemyOgg);
     }
 
     create() {
