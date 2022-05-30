@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 
 export default class Beam extends Phaser.Physics.Arcade.Sprite {
 
-    static SPEED = 200;
+    static SPEED = 100;
     static DURATION = 10000;
 
     constructor(scene, player) {
