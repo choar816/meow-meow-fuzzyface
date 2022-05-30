@@ -33,7 +33,6 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
         // TODO: 관통 무기
         projectile.destroy();
-        // this.resetShipPos(enemy);
         this.scene.m_hitEnemySound.play();
 
         if (this.m_hp <= 0) {

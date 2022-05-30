@@ -1,37 +1,30 @@
 import game from "../index";
 
-let global_scene_paused = false;
-let global_time_paused = (Date.now() - 100);
+let level_scene_paused = false;
+let level_time_paused = (Date.now() - 100);
 
-export default function global_levelup(scene) {
-    if (Date.now() - global_time_paused > 100 && game.scene.isActive(scene)) {
+export default function level_pause(scene) {
+    if (Date.now() - level_time_paused > 100 && game.scene.isActive(scene)) {
         game.scene.pause(scene);
-        global_time_paused = Date.now();
-        global_scene_paused = scene;
+        level_time_paused = Date.now();
+        level_scene_paused = scene;
 
         game.scene.getScene(scene).toggleLevelScreen(true);
         game.scene.getScene(scene).m_pauseInSound.play({volume: 0.2});
     }
 }
 
-export function go_to_next_level(scene) {
-    console.log('go_to_next_level');
-    if (Date.now() - global_time_paused > 100 && global_scene_paused) {
-        game.scene.resume(scene);
-        game.scene.getScene(scene).toggleLevelScreen(false);
-        game.scene.getScene(scene).m_pauseOutSound.play({volume: 0.2});
-        global_scene_paused = false;
-        global_time_paused = Date.now();
-        scene.m_level += 1;
+document.addEventListener('keydown', function(event) {
+    if ((event.key === '1' || event.key === '2' || event.key === '3') && Date.now() - level_time_paused > 100 && level_scene_paused) {
+        const previousScene = game.scene.getScene(level_scene_paused);
+        game.scene.resume(level_scene_paused);
+        previousScene.toggleLevelScreen(false);
+        previousScene.m_pauseOutSound.play({volume: 0.2});
+        previousScene.m_level += 1;
+        previousScene.m_levelLabel.text = `LEVEL ${previousScene.m_level.toString().padStart(3, '0')}`;
+        previousScene.m_levelLabel.setScrollFactor(0);
+        previousScene.m_levelLabel.setDepth(100);
+        level_scene_paused = false;
+        level_time_paused = Date.now();
     }
-}
-
-// document.addEventListener('keydown', function(event) {
-//     if(event.key === ' ' && Date.now() - global_time_paused > 100 && global_scene_paused) {
-//         game.scene.resume(global_scene_paused);
-//         game.scene.getScene(global_scene_paused).toggleLevelScreen(false);
-//         game.scene.getScene(global_scene_paused).m_pauseOutSound.play({volume: 0.2});
-//         global_scene_paused = false;
-//         global_time_paused = Date.now();
-//     }
-// });
+});

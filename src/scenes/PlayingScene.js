@@ -5,7 +5,7 @@ import Config from "../Config";
 import Enemy from "../characters/Enemy";
 import Button from "../ui/Button";
 import global_pause from "../utils/pause";
-import global_levelup, {go_to_next_level} from "../utils/levelup";
+import level_pause from "../utils/levelup";
 
 export default class PlayingScene extends Phaser.Scene {
     constructor() {
@@ -17,9 +17,6 @@ export default class PlayingScene extends Phaser.Scene {
         this.createVeil();
         this.createPauseScreen();
         this.createLevelScreen();
-
-        // level
-        this.m_level = 1;
 
         // sound
         this.sound.pauseOnBlur = false;
@@ -34,7 +31,7 @@ export default class PlayingScene extends Phaser.Scene {
 
         this.m_music = this.sound.add("music");
         const musicConfig = {
-            mute: true, // edit later
+            mute: false, // edit later
             volume: 0.7,
             rate: 1,
             detune: 0,
@@ -55,11 +52,17 @@ export default class PlayingScene extends Phaser.Scene {
         graphics.setDepth(90);
         graphics.setScrollFactor(0);
         this.m_score = 0;
-        this.m_scoreLabel = this.add.bitmapText(0, 0, "pixelFont", ` SCORE ${this.m_score.toString().padStart(6, '0')}`, 40);
+        this.m_scoreLabel = this.add.bitmapText(5, 1, "pixelFont", `SCORE ${this.m_score.toString().padStart(6, '0')}`, 40);
         this.m_scoreLabel.setScrollFactor(0);
         this.m_scoreLabel.setDepth(100);
 
-        new ExpBar(this);
+        this.m_expBar = new ExpBar(this);
+
+        // level
+        this.m_level = 1;
+        this.m_levelLabel = this.add.bitmapText(650, 1, "pixelFont", `LEVEL ${this.m_level.toString().padStart(3, '0')}`, 40);
+        this.m_levelLabel.setScrollFactor(0);
+        this.m_levelLabel.setDepth(100);
 
         // enemies
         this.m_enemies = this.physics.add.group();
@@ -116,7 +119,7 @@ export default class PlayingScene extends Phaser.Scene {
             global_pause("playGame");
         }, this);
         this.input.keyboard.on('keydown-L', () => {
-            global_levelup("playGame");
+            level_pause("playGame");
         }, this);
 
         // Timers
@@ -136,18 +139,7 @@ export default class PlayingScene extends Phaser.Scene {
         /// TEMP AREA
         this.m_gfx = this.add.graphics();
     }
-
-    pickPowerUp(player, powerUp) {
-        /*
-        disableBody
-        parameter 1 : make it inactive
-        parameter 2 : hide it from the display list
-        */
-        powerUp.disableBody(true, true);
-        player.gainPower(10);
-        this.m_pickupSound.play();
-        powerUp.destroy();
-    }
+    //////////////////////////// END OF create() ////////////////////////////
 
     update() {
         this.movePlayerManager();
@@ -174,6 +166,21 @@ export default class PlayingScene extends Phaser.Scene {
             .lineBetween(furthest.x, furthest.y, this.m_player.x, this.m_player.y);
     }
 
+
+    //////////////////////// FUNCTIONS ////////////////////////
+
+    pickPowerUp(player, powerUp) {
+        /*
+        disableBody
+        parameter 1 : make it inactive
+        parameter 2 : hide it from the display list
+        */
+        powerUp.disableBody(true, true);
+        player.gainPower(10);
+        this.m_pickupSound.play();
+        powerUp.destroy();
+    }
+
     movePlayerManager() {
         if (this.m_cursorKeys.left.isDown || this.m_wasdKeys.left.isDown) {
             this.m_player.move(Direction.Left);
@@ -198,10 +205,11 @@ export default class PlayingScene extends Phaser.Scene {
     }
 
     createLevelScreen() {
-        // Next level button
-        this.m_levelBtn = new Button(Config.width / 2, Config.height / 2, 'Go to Next Level', this, () => go_to_next_level(this));
-        this.m_levelBtn.setDepth(120);
-        this.m_levelBtn.setScrollFactor(0);
+        // Pause text (level)
+        const texts = ["You're on the Next Level", "", "Press 1 : Magic Wand", "Press 2 : Knife", "Press 3 : Hollow Heart"];
+        this.m_textLevel = this.add.text(Config.width / 2, Config.height / 2, texts, { fontSize: 40 }).setOrigin(0.5);
+        this.m_textLevel.setDepth(120);
+        this.m_textLevel.setScrollFactor(0);
 
         // Hide at start
         this.toggleLevelScreen(false);
@@ -209,7 +217,7 @@ export default class PlayingScene extends Phaser.Scene {
 
     toggleLevelScreen(isVisible) {
         this.m_veil.setVisible(isVisible);
-        this.m_levelBtn.setVisible(isVisible);
+        this.m_textLevel.setVisible(isVisible);
         console.log(this.m_level);
     }
 
