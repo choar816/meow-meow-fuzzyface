@@ -12,6 +12,7 @@ export default class Beam extends Phaser.GameObjects.Sprite {
         this.play("beam_anim");
 
         this.setVelocity();
+        this.setAngle();
         setTimeout(() => this.destroy(), duration);
     }
 
@@ -25,5 +26,11 @@ export default class Beam extends Phaser.GameObjects.Sprite {
         const _r = Math.sqrt(_x*_x + _y*_y) / 2;
         this.body.velocity.x = _x / _r * 40;
         this.body.velocity.y = _y / _r * 40;
+    }
+
+    setAngle() {
+        const angleToEnemy = Phaser.Math.Angle.Between(this.x, this.y, this.scene.m_closest.x, this.scene.m_closest.y);
+        this.rotation = angleToEnemy + Math.PI / 2;
+        this.body.setAngularVelocity(0);
     }
 }
