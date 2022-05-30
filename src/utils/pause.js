@@ -15,7 +15,7 @@ export default function global_pause(scene) {
 }
 
 document.addEventListener('keydown', function(event) {
-    if(event.key === 'Escape' && Date.now() - global_time_paused > 100 && global_scene_paused) {
+    if (event.key === 'Escape' && Date.now() - global_time_paused > 100 && global_scene_paused) {
         game.scene.resume(global_scene_paused);
         game.scene.getScene(global_scene_paused).togglePauseScreen(false);
         game.scene.getScene(global_scene_paused).m_pauseOutSound.play({volume: 0.2});

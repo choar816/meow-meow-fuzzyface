@@ -3,9 +3,9 @@ import ExpBar from "../ui/ExpBar";
 import Player, {Direction} from "../characters/Player";
 import Config from "../Config";
 import Enemy from "../characters/Enemy";
-import global_pause from "../utils/pause";
 import Button from "../ui/Button";
-import global_levelup from "../utils/levelup";
+import global_pause from "../utils/pause";
+import global_levelup, {go_to_next_level} from "../utils/levelup";
 
 export default class PlayingScene extends Phaser.Scene {
     constructor() {
@@ -17,6 +17,9 @@ export default class PlayingScene extends Phaser.Scene {
         this.createVeil();
         this.createPauseScreen();
         this.createLevelScreen();
+
+        // level
+        this.m_level = 1;
 
         // sound
         this.sound.pauseOnBlur = false;
@@ -113,7 +116,7 @@ export default class PlayingScene extends Phaser.Scene {
             global_pause("playGame");
         }, this);
         this.input.keyboard.on('keydown-L', () => {
-            this.toggleLevelScreen(true);
+            global_levelup("playGame");
         }, this);
 
         // Timers
@@ -196,7 +199,7 @@ export default class PlayingScene extends Phaser.Scene {
 
     createLevelScreen() {
         // Next level button
-        this.m_levelBtn = new Button(Config.width / 2, Config.height / 2, 'Go to Next Level', this, () => console.log('go to next level'));
+        this.m_levelBtn = new Button(Config.width / 2, Config.height / 2, 'Go to Next Level', this, () => go_to_next_level(this));
         this.m_levelBtn.setDepth(120);
         this.m_levelBtn.setScrollFactor(0);
 
@@ -207,6 +210,7 @@ export default class PlayingScene extends Phaser.Scene {
     toggleLevelScreen(isVisible) {
         this.m_veil.setVisible(isVisible);
         this.m_levelBtn.setVisible(isVisible);
+        console.log(this.m_level);
     }
 
     createPauseScreen() {
