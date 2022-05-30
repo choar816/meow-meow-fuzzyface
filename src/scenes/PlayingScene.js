@@ -112,9 +112,9 @@ export default class PlayingScene extends Phaser.Scene {
         this.input.keyboard.on('keydown-ESC', () => {
             global_pause("playGame");
         }, this);
-        // this.input.keyboard.on('keydown-L', () => {
-        //     this.toggleLevelScreen(true);
-        // }, this);
+        this.input.keyboard.on('keydown-L', () => {
+            this.toggleLevelScreen(true);
+        }, this);
 
         // Timers
         this.time.addEvent({
@@ -187,7 +187,7 @@ export default class PlayingScene extends Phaser.Scene {
 
     createVeil() {
         // Transparent dark veil
-        this.m_veil = this.add.graphics({x:0, y:0});
+        this.m_veil = this.add.graphics({ x: 0, y: 0 });
         this.m_veil.fillStyle(0x000000, 0.3);
         this.m_veil.fillRect(0, 0, Config.width, Config.height);
         this.m_veil.setDepth(110);
@@ -195,10 +195,12 @@ export default class PlayingScene extends Phaser.Scene {
     }
 
     createLevelScreen() {
-        this.m_levelBtn = new Button(0, 0, 'Go to Next Level', this, () => console.log('go to next level'));
+        // Next level button
+        this.m_levelBtn = new Button(Config.width / 2, Config.height / 2, 'Go to Next Level', this, () => console.log('go to next level'));
         this.m_levelBtn.setDepth(120);
-        this.m_levelBtn.setVisible(false);
+        this.m_levelBtn.setScrollFactor(0);
 
+        // Hide at start
         this.toggleLevelScreen(false);
     }
 

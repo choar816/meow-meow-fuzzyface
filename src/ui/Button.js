@@ -1,14 +1,16 @@
-export default class Button extends Phaser.GameObjects.Graphics {
+export default class Button extends Phaser.GameObjects.Text {
     constructor(x, y, label, scene, callback) {
-        super(scene);
+        super(scene, x, y, label, { backgroundColor: '#8aacc8' });
 
-        const button = scene.add.text(x, y, label)
+        this
             .setOrigin(0.5)
             .setPadding(10)
             .setStyle({ backgroundColor: '#8aacc8' })
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => callback())
-            .on('pointerover', () => button.setStyle({ fill: '#000' }))
-            .on('pointerout', () => button.setStyle({ fill: '#fff' }));
+            .on('pointerover', () => this.setStyle({ fill: '#000' }))
+            .on('pointerout', () => this.setStyle({ fill: '#fff' }));
+
+        scene.add.existing(this);
     }
 }
