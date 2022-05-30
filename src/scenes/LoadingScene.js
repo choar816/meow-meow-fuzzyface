@@ -50,8 +50,8 @@ export default class LoadingScene extends Phaser.Scene {
         this.load.image("cat", catImg);
 
         this.load.spritesheet("beam", beamImg, {
-            frameWidth: 16,
-            frameHeight: 16
+            frameWidth: 75,
+            frameHeight: 75,
         });
 
         this.load.bitmapFont("pixelFont", fontPng, fontXml);
@@ -111,12 +111,6 @@ export default class LoadingScene extends Phaser.Scene {
                 start: 2,
                 end: 3
             }),
-            frameRate: 20,
-            repeat: -1
-        });
-        this.anims.create({
-            key: "beam_anim",
-            frames: this.anims.generateFrameNumbers("beam"),
             frameRate: 20,
             repeat: -1
         });
