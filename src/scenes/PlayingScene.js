@@ -67,9 +67,7 @@ export default class PlayingScene extends Phaser.Scene {
 
         // enemies
         this.m_enemies = this.physics.add.group();
-        this.m_enemies.add(new Enemy(this, Config.width / 2 - 100, Config.height / 2, "bat", "bat_anim", 10));
-        this.m_enemies.add(new Enemy(this, Config.width / 2, Config.height / 2 + 100, "ship2", "ship2_anim", 20));
-        this.m_enemies.add(new Enemy(this, Config.width / 2 + 100, Config.height / 2, "ship3", "ship3_anim", 20));
+        this.m_enemies.add(new Enemy(this, Config.width / 2 - 200, Config.height / 2 - 200, "bat", "bat_anim", 10));
 
         this.m_projectiles = this.add.group();
 
@@ -79,6 +77,7 @@ export default class PlayingScene extends Phaser.Scene {
         let maxObjects = 4;
         for (let i = 0; i < maxObjects; i++) {
             const powerUp = this.physics.add.sprite(16, 16, "power-up");
+            powerUp.scale = 1.5;
             this.m_powerUps.add(powerUp);
             powerUp.setRandomPosition(0, 0, Config.width, Config.height);
 

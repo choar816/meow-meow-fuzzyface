@@ -10,6 +10,7 @@ export default class Beam extends Phaser.GameObjects.Sprite {
         scene.m_projectiles.add(this);
         scene.m_beamSound.play();
         this.play("beam_anim");
+        this.scale = 2;
 
         this.setVelocity();
         this.setAngle();

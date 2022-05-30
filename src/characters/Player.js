@@ -14,7 +14,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
 
     constructor(scene) {
         super(scene, 400, 300, "cat");
-        this.scale = 0.2;
+        this.scale = 0.4;
         this.alpha = 1;
         this.m_hpBar = new HpBar(scene, this, 100);
 
@@ -40,7 +40,6 @@ export default class Player extends Phaser.Physics.Arcade.Image {
             return;
 
         this.scene.m_hurtSound.play();
-        console.log(`HIT! damage: ${damage}`);
         this.m_hpBar.decrease(damage);
         if (this.m_hpBar.m_currentHp <= 0) {
             // 게임오버!

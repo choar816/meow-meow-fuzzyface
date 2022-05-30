@@ -7,6 +7,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
+        this.scale = 2;
         this.m_speed = 50;
         this.m_hp = initHp;
 
