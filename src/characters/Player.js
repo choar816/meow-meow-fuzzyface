@@ -99,7 +99,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     }
 
     shootBeam() {
-        new Beam(this.scene, this);
+        new Beam(this.scene, this, 500);
     }
 
     gainPower(amount) {
