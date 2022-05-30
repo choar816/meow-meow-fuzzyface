@@ -53,7 +53,7 @@ export default class PlayingScene extends Phaser.Scene {
         graphics.setDepth(90);
         graphics.setScrollFactor(0);
         this.m_score = 0;
-        this.m_scoreLabel = this.add.bitmapText(5, 1, "pixelFont", `SCORE ${this.m_score.toString().padStart(6, '0')}`, 40);
+        this.m_scoreLabel = this.add.bitmapText(5, 1, "pixelFont", `ENEMY KILLED ${this.m_score.toString().padStart(6, '0')}`, 40);
         this.m_scoreLabel.setScrollFactor(0);
         this.m_scoreLabel.setDepth(100);
 

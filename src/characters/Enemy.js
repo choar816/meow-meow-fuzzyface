@@ -40,8 +40,8 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
             const explosion = new Explosion(this.scene, this.x, this.y);
 
             // TODO: 이런건 scene에서?
-            this.scene.m_score += 15;
-            this.scene.m_scoreLabel.text = "SCORE " + this.scene.m_score.toString().padStart(6, '0');
+            this.scene.m_score += 1;
+            this.scene.m_scoreLabel.text = `ENEMY KILLED ${this.scene.m_score.toString().padStart(6, '0')}`;
             this.scene.m_explosionSound.play();
 
             this.scene.time.removeEvent(this.m_events);
