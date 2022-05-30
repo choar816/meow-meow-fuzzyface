@@ -10,12 +10,19 @@ export default class Beam extends Phaser.GameObjects.Sprite {
         scene.m_projectiles.add(this);
         scene.m_beamSound.play();
         this.play("beam_anim");
-        this.body.velocity.y = -250;
 
         setTimeout(() => this.destroy(), duration);
     }
 
     update() {
+        this.setVelocity();
+    }
 
+    setVelocity() {
+        const _x = this.scene.m_closest.x - this.x;
+        const _y = this.scene.m_closest.y - this.y;
+        const _r = Math.sqrt(_x*_x + _y*_y) / 2;
+        this.body.velocity.x = _x / _r * 40;
+        this.body.velocity.y = _y / _r * 40;
     }
 }

@@ -31,7 +31,8 @@ export default class PlayingScene extends Phaser.Scene {
 
         this.m_music = this.sound.add("music");
         const musicConfig = {
-            mute: false, // edit later
+            mute: true,
+            // mute: false,
             volume: 0.7,
             rate: 1,
             detune: 0,
@@ -158,6 +159,7 @@ export default class PlayingScene extends Phaser.Scene {
         /// TEMP - closest
         const closest = this.physics.closest(this.m_player, this.m_enemies.getChildren());
         const furthest = this.physics.furthest(this.m_player, this.m_enemies.getChildren());
+        this.m_closest = closest;
 
         this.m_gfx.clear()
             .lineStyle(2, 0xff3300)
