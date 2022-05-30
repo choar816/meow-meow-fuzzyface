@@ -1,33 +1,53 @@
-import Config from "../Config";
+// import Config from "../Config";
+import {clamp} from "../utils/math";
 
+// TODO: HpBar와 겹치는 부분 클래스로 분리
 export default class ExpBar extends Phaser.GameObjects.Graphics {
-    constructor(scene) {
+    // static WIDTH = Config.width;
+    static WIDTH = 800; // TODO: how to get from config?
+    static HEIGHT = 30;
+    static BORDER = 4;
+
+    constructor(scene, maxExp) {
         super(scene);
 
-        this.m_value = 33;
-        this.border = 4;
-        this.m_p = (Config.width - 2*this.border) / 100;
+        this.m_x = 0;
+        this.m_y = 30;
+
+        this.m_maxExp = maxExp;
+        this.m_currentExp = 0;
         this.draw();
-        this.setDepth(100);
         this.setScrollFactor(0);
 
         scene.add.existing(this);
     }
 
+    increase(amount) {
+        this.m_currentExp = clamp(this.m_currentExp + amount, 0, this.m_maxExp);
+        this.draw();
+    }
+
+    // decrease(amount) {
+    //     this.m_currentExp = clamp(this.m_currentExp - amount, 0, this.m_maxExp);
+    //     this.draw();
+    // }
+
     draw() {
         this.clear();
 
-        // borders
+        // BG
         this.fillStyle(0x000000);
-        this.fillRect(0, 30, Config.width, 30);
+        this.fillRect(this.m_x, this.m_y, ExpBar.WIDTH, ExpBar.HEIGHT);
 
-        // Experience BG
-        this.fillStyle(0xFFFFFF);
-        this.fillRect(this.border, 30 + this.border, Config.width - 2*this.border, 30 - 2*this.border);
+        // Exp
+        this.fillStyle(0xffffff);
+        this.fillRect(this.m_x + ExpBar.BORDER, this.m_y + ExpBar.BORDER,
+            ExpBar.WIDTH - 2 * ExpBar.BORDER, ExpBar.HEIGHT - 2 * ExpBar.BORDER);
 
-        // Experience value
-        this.fillStyle(0xff0000);
-        let d = Math.floor(this.m_p * this.m_value);
-        this.fillRect(this.border, 30 + this.border, d, 30 - 2*this.border);
+        this.fillStyle(0x3665D5);
+
+        let d = Math.floor((ExpBar.WIDTH - 2 * ExpBar.BORDER) / this.m_maxExp * this.m_currentExp);
+
+        this.fillRect(this.m_x + ExpBar.BORDER, this.m_y + ExpBar.BORDER, d, ExpBar.HEIGHT - 2 * ExpBar.BORDER);
     }
 }

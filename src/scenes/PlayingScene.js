@@ -6,6 +6,7 @@ import Enemy from "../characters/Enemy";
 import Button from "../ui/Button";
 import global_pause from "../utils/pause";
 import level_pause from "../utils/levelup";
+import {getRandomPosition} from "../utils/math";
 
 export default class PlayingScene extends Phaser.Scene {
     constructor() {
@@ -57,7 +58,7 @@ export default class PlayingScene extends Phaser.Scene {
         this.m_scoreLabel.setScrollFactor(0);
         this.m_scoreLabel.setDepth(100);
 
-        this.m_expBar = new ExpBar(this);
+        this.m_expBar = new ExpBar(this, 100);
 
         // level
         this.m_level = 1;
@@ -126,12 +127,23 @@ export default class PlayingScene extends Phaser.Scene {
         this.time.addEvent({
             delay: 1000,
             callback: () => {
-                const randRad = Math.random() * Math.PI * 2;
                 const r = Math.sqrt(Config.width*Config.width + Config.height*Config.height) / 2;
-                const x = this.m_player.x + (r * Math.cos(randRad));
-                const y = this.m_player.y + (r * Math.sin(randRad));
 
+                let [x, y] = getRandomPosition(this.m_player.x, this.m_player.y, r);
                 this.m_enemies.add(new Enemy(this, x, y, "bat", "bat_anim", 10));
+
+                // TODO: powerup 클래스 분리
+                [x, y] = getRandomPosition(this.m_player.x, this.m_player.y, r);
+                const powerUp = this.physics.add.sprite(16, 16, "power-up");
+                powerUp.scale = 1.5;
+                this.m_powerUps.add(powerUp);
+                powerUp.setPosition(x, y);
+
+                if (Math.random() > 0.5) {
+                    powerUp.play("red");
+                } else {
+                    powerUp.play("gray");
+                }
             },
             loop: true,
         });
@@ -180,6 +192,12 @@ export default class PlayingScene extends Phaser.Scene {
         player.gainPower(10);
         this.m_pickupSound.play();
         powerUp.destroy();
+        this.m_expBar.increase(10);
+        if (this.m_expBar.m_currentExp >= this.m_expBar.m_maxExp) {
+            this.m_expBar.m_currentExp = 0;
+            this.m_expBar.m_maxExp += 50;
+            // TODO: 레벨업 관련 로직 추가
+        }
     }
 
     movePlayerManager() {

@@ -30,6 +30,7 @@ export default class HpBar extends Phaser.GameObjects.Graphics {
         this.draw();
     }
 
+
     draw() {
         this.clear();
 
@@ -48,7 +49,7 @@ export default class HpBar extends Phaser.GameObjects.Graphics {
             this.fillStyle(0x00ff00);
         }
 
-        let d = Math.floor((HpBar.WIDTH - 2 * HpBar.BORDER) / 100 * this.m_currentHp);
+        let d = Math.floor((HpBar.WIDTH - 2 * HpBar.BORDER) / this.m_maxHp * this.m_currentHp);
 
         this.fillRect(this.m_x + HpBar.BORDER, this.m_y + HpBar.BORDER, d, HpBar.HEIGHT - 2 * HpBar.BORDER);
     }
