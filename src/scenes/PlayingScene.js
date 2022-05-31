@@ -148,11 +148,11 @@ export default class PlayingScene extends Phaser.Scene {
         const closest = this.physics.closest(this.m_player, this.m_enemies.getChildren());
         const furthest = this.physics.furthest(this.m_player, this.m_enemies.getChildren());
         this.m_closest = closest;
-        this.m_gfx.clear()
-            .lineStyle(2, 0xff3300)
-            .lineBetween(closest.x, closest.y, this.m_player.x, this.m_player.y)
-            .lineStyle(2, 0x0099ff)
-            .lineBetween(furthest.x, furthest.y, this.m_player.x, this.m_player.y);
+        // this.m_gfx.clear()
+        //     .lineStyle(2, 0xff3300)
+        //     .lineBetween(closest.x, closest.y, this.m_player.x, this.m_player.y)
+        //     .lineStyle(2, 0x0099ff)
+        //     .lineBetween(furthest.x, furthest.y, this.m_player.x, this.m_player.y);
     }
 
 

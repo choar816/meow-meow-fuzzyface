@@ -10,7 +10,7 @@ export const Direction = Object.freeze({
 });
 
 export default class Player extends Phaser.Physics.Arcade.Image {
-    static PLAYER_SPEED = 5;
+    static PLAYER_SPEED = 3;
 
     constructor(scene) {
         super(scene, 400, 300, "cat");
