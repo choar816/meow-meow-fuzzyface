@@ -22,9 +22,11 @@ document.addEventListener('keydown', function(event) {
         previousScene.m_pauseOutSound.play({volume: 0.2});
         previousScene.m_level += 1;
         previousScene.m_levelLabel.text = `LEVEL ${previousScene.m_level.toString().padStart(3, '0')}`;
-        previousScene.m_levelLabel.setScrollFactor(0);
-        previousScene.m_levelLabel.setDepth(100);
         level_scene_paused = false;
         level_time_paused = Date.now();
+
+        previousScene.m_expBar.m_maxExp += 10;
+        previousScene.m_expBar.reset();
+        // code here sucks...
     }
 });

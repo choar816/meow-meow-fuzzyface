@@ -58,7 +58,7 @@ export default class PlayingScene extends Phaser.Scene {
         this.m_scoreLabel.setScrollFactor(0);
         this.m_scoreLabel.setDepth(100);
 
-        this.m_expBar = new ExpBar(this, 100);
+        this.m_expBar = new ExpBar(this, 50);
 
         // level
         this.m_level = 1;
@@ -189,14 +189,12 @@ export default class PlayingScene extends Phaser.Scene {
         parameter 2 : hide it from the display list
         */
         powerUp.disableBody(true, true);
-        player.gainPower(10);
-        this.m_pickupSound.play();
         powerUp.destroy();
+        // player.gainPower(10);
+        this.m_pickupSound.play();
         this.m_expBar.increase(10);
         if (this.m_expBar.m_currentExp >= this.m_expBar.m_maxExp) {
-            this.m_expBar.m_currentExp = 0;
-            this.m_expBar.m_maxExp += 50;
-            // TODO: 레벨업 관련 로직 추가
+            level_pause(this);
         }
     }
 
@@ -237,7 +235,6 @@ export default class PlayingScene extends Phaser.Scene {
     toggleLevelScreen(isVisible) {
         this.m_veil.setVisible(isVisible);
         this.m_textLevel.setVisible(isVisible);
-        console.log(this.m_level);
     }
 
     createPauseScreen() {

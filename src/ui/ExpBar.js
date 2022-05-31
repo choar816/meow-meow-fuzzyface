@@ -17,6 +17,7 @@ export default class ExpBar extends Phaser.GameObjects.Graphics {
         this.m_maxExp = maxExp;
         this.m_currentExp = 0;
         this.draw();
+        this.setDepth(100);
         this.setScrollFactor(0);
 
         scene.add.existing(this);
@@ -27,10 +28,10 @@ export default class ExpBar extends Phaser.GameObjects.Graphics {
         this.draw();
     }
 
-    // decrease(amount) {
-    //     this.m_currentExp = clamp(this.m_currentExp - amount, 0, this.m_maxExp);
-    //     this.draw();
-    // }
+    reset() {
+        this.m_currentExp = 0;
+        this.draw();
+    }
 
     draw() {
         this.clear();
