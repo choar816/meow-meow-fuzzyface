@@ -63,15 +63,14 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     resetPlayer() {
         this.enableBody(true, this.x, this.y, true, true);
 
-        const tween = this.scene.tweens.add({
+        this.scene.tweens.add({
             targets: this,
             ease: 'Power1',
             duration: 1500,
             repeat: 0,
-            onComplete: function() {
+            onComplete: () => {
                 this.alpha = 1;
             },
-            callbackScope: this
         });
     }
 

@@ -29,6 +29,10 @@ export default class Beam extends Phaser.Physics.Arcade.Sprite {
     }
 
     setVelocity() {
+        if (!this.scene.m_closest) {
+            this.setVelocityY(-250);
+            return;
+        }
         const _x = this.scene.m_closest.x - this.x;
         const _y = this.scene.m_closest.y - this.y;
         const _r = Math.sqrt(_x*_x + _y*_y) / 2;
