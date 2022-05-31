@@ -27,6 +27,22 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
             },
             loop: true,
         }));
+
+        // Ref: https://github.com/photonstorm/phaser/issues/3378
+        scene.events.on('update', (time, delta) => {
+            this.update(time, delta);
+        })
+    }
+
+    update(time, delta) {
+        // TODO : refactor (없어진 enemy에서도 계속 호출되는 듯)
+        if (!this.body)
+            return;
+
+        if (this.body.velocity.x > 0)
+            this.flipX = true;
+        else
+            this.flipX = false;
     }
 
     hit(projectile, damage) {
