@@ -1,7 +1,5 @@
 import Phaser from 'phaser';
 import bgImg from '../assets/images/background.png';
-import ship2Img from '../assets/spritesheets/ship2.png';
-import ship3Img from '../assets/spritesheets/ship3.png';
 import explosionImg from '../assets/spritesheets/explosion.png';
 import powerUpImg from '../assets/spritesheets/power-up.png';
 import catImg from '../assets/images/cat-rainbow.png';
@@ -18,6 +16,8 @@ import pauseIn from "../assets/sounds/pauseIn.ogg";
 import pauseOut from "../assets/sounds/pauseOut.ogg";
 import hitEnemyOgg from "../assets/sounds/hitEnemy.ogg";
 import batImg from "../assets/spritesheets/bat.png";
+import dogImg from "../assets/spritesheets/dog.png";
+import eyeballImg from "../assets/spritesheets/eyeball.png";
 
 export default class LoadingScene extends Phaser.Scene {
     constructor() {
@@ -31,14 +31,15 @@ export default class LoadingScene extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         });
-        this.load.spritesheet("ship2", ship2Img, {
-            frameWidth: 32,
+        this.load.spritesheet("dog", dogImg, {
+            frameWidth: 16,
             frameHeight: 16
         });
-        this.load.spritesheet("ship3", ship3Img, {
-            frameWidth: 32,
-            frameHeight: 32
+        this.load.spritesheet("eyeball", eyeballImg, {
+            frameWidth: 16,
+            frameHeight: 16
         });
+
         this.load.spritesheet("explosion", explosionImg, {
             frameWidth: 16,
             frameHeight: 16
@@ -77,17 +78,18 @@ export default class LoadingScene extends Phaser.Scene {
             repeat: -1
         });
         this.anims.create({
-            key: "ship2_anim",
-            frames: this.anims.generateFrameNumbers("ship2"),
-            frameRate: 20,
+            key: "dog_anim",
+            frames: this.anims.generateFrameNumbers("dog"),
+            frameRate: 12,
             repeat: -1
         });
         this.anims.create({
-            key: "ship3_anim",
-            frames: this.anims.generateFrameNumbers("ship3"),
-            frameRate: 20,
+            key: "eyeball_anim",
+            frames: this.anims.generateFrameNumbers("eyeball"),
+            frameRate: 12,
             repeat: -1
         });
+
         this.anims.create({
             key: "explode",
             frames: this.anims.generateFrameNumbers("explosion"),

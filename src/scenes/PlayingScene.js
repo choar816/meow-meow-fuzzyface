@@ -70,6 +70,7 @@ export default class PlayingScene extends Phaser.Scene {
         this.m_enemies = this.physics.add.group();
         this.m_enemies.add(new Enemy(this, Config.width / 2 - 200, Config.height / 2 - 200, "bat", "bat_anim", 10));
 
+        // projectiles
         this.m_projectiles = this.add.group();
 
         // powerUp
@@ -124,16 +125,13 @@ export default class PlayingScene extends Phaser.Scene {
         }, this);
 
         // Timers
+        this.addEnemy("bat", "bat_anim", 10);
         this.time.addEvent({
             delay: 1000,
             callback: () => {
-                const r = Math.sqrt(Config.width*Config.width + Config.height*Config.height) / 2;
-
-                let [x, y] = getRandomPosition(this.m_player.x, this.m_player.y, r);
-                this.m_enemies.add(new Enemy(this, x, y, "bat", "bat_anim", 10));
-
                 // TODO: powerup 클래스 분리
-                [x, y] = getRandomPosition(this.m_player.x, this.m_player.y, r);
+                const r = Math.sqrt(Config.width*Config.width + Config.height*Config.height); // 좀 멀리 생기게 했음
+                const [x, y] = getRandomPosition(this.m_player.x, this.m_player.y, r);
                 const powerUp = this.physics.add.sprite(16, 16, "power-up");
                 powerUp.scale = 1.5;
                 this.m_powerUps.add(powerUp);
@@ -196,6 +194,33 @@ export default class PlayingScene extends Phaser.Scene {
         if (this.m_expBar.m_currentExp >= this.m_expBar.m_maxExp) {
             level_pause(this);
         }
+    }
+
+    afterLevelUp() {
+        this.m_level += 1;
+        this.m_levelLabel.text = `LEVEL ${this.m_level.toString().padStart(3, '0')}`;
+        this.m_expBar.m_maxExp += 10;
+        this.m_expBar.reset();
+
+        // TODO : 노가다 -> brilliant way
+        // 지금 방식 = 레벨업 할 때마다 enemy 종류 추가 (없어지진 않음 ㅋ)
+        if (this.m_level == 2) {
+            this.addEnemy("dog", "dog_anim", 20);
+        } else if (this.m_level == 3) {
+            this.addEnemy("eyeball", "eyeball_anim", 30);
+        }
+    }
+
+    addEnemy(enemyTexture, enemyAnim, enemyHp) {
+        this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                const r = Math.sqrt(Config.width * Config.width + Config.height * Config.height) / 2;
+                let [x, y] = getRandomPosition(this.m_player.x, this.m_player.y, r);
+                this.m_enemies.add(new Enemy(this, x, y, enemyTexture, enemyAnim, enemyHp));
+            },
+            loop: true,
+        });
     }
 
     movePlayerManager() {
