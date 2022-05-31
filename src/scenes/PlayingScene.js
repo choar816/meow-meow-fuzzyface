@@ -76,21 +76,6 @@ export default class PlayingScene extends Phaser.Scene {
         // powerUp
         this.m_powerUps = this.physics.add.group();
 
-        let maxObjects = 4;
-        for (let i = 0; i < maxObjects; i++) {
-            const powerUp = this.physics.add.sprite(16, 16, "power-up");
-            powerUp.scale = 1.5;
-            this.m_powerUps.add(powerUp);
-            powerUp.setRandomPosition(0, 0, Config.width, Config.height);
-
-            if (Math.random() > 0.5) {
-                powerUp.play("red");
-            } else {
-                powerUp.play("gray");
-            }
-            // powerUp.setCollideWorldBounds(true);
-        }
-
         // player
         this.m_player = new Player(this);
         this.cameras.main.startFollow(this.m_player);
@@ -116,7 +101,6 @@ export default class PlayingScene extends Phaser.Scene {
         this.physics.add.overlap(this.m_projectiles, this.m_enemies, null, null, this);
 
         // event handler
-        // this.input.on('');
         this.input.keyboard.on('keydown-ESC', () => {
             global_pause("playGame");
         }, this);
@@ -154,14 +138,9 @@ export default class PlayingScene extends Phaser.Scene {
     update() {
         this.movePlayerManager();
 
-        for (let i = 0; i < this.m_projectiles.getChildren().length; ++i) {
-            const beam = this.m_projectiles.getChildren()[i];
-            beam.update();
-        }
-
+        // infinite background
         this.m_background.setX(this.m_player.x - 400);
         this.m_background.setY(this.m_player.y - 300);
-
         this.m_background.tilePositionX = this.m_player.x - 400;
         this.m_background.tilePositionY = this.m_player.y - 300;
 
@@ -169,7 +148,6 @@ export default class PlayingScene extends Phaser.Scene {
         const closest = this.physics.closest(this.m_player, this.m_enemies.getChildren());
         const furthest = this.physics.furthest(this.m_player, this.m_enemies.getChildren());
         this.m_closest = closest;
-
         this.m_gfx.clear()
             .lineStyle(2, 0xff3300)
             .lineBetween(closest.x, closest.y, this.m_player.x, this.m_player.y)

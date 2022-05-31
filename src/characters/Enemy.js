@@ -11,9 +11,9 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.m_speed = 50;
         this.m_hp = initHp;
 
-        this.on("overlapstart", function(projectile) {
+        this.on("overlapstart", (projectile) => {
             this.hit(projectile, 10);
-        }.bind(this));
+        });
 
         if (animKey) {
             this.play(animKey);

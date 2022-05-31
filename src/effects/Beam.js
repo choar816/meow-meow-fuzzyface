@@ -25,7 +25,7 @@ export default class Beam extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        // this.setVelocity();
+
     }
 
     setVelocity() {
