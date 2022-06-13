@@ -16,7 +16,7 @@ export default function level_pause(scene) {
 
 document.addEventListener("keydown", function (event) {
   if (
-    (event.key === "1" || event.key === "2" || event.key === "3") &&
+    (event.key === "Enter") &&
     Date.now() - level_time_paused > 100 &&
     level_scene_paused
   ) {

@@ -299,13 +299,7 @@ export default class PlayingScene extends Phaser.Scene {
 
   createLevelScreen() {
     // Pause text (level)
-    const texts = [
-      "You're on the Next Level",
-      "",
-      "Press 1 : Magic Wand",
-      "Press 2 : Knife",
-      "Press 3 : Hollow Heart",
-    ];
+    const texts = ["You're on the Next Level!", "", "Press Enter to Keep Going"];
     this.m_textLevel = this.add
       .text(Config.width / 2, Config.height / 2, texts, { fontSize: 40 })
       .setOrigin(0.5);
