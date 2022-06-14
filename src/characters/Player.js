@@ -1,3 +1,4 @@
+import Phaser from "phaser";
 import HpBar from "../ui/HpBar";
 import Beam from "../effects/Beam";
 import Explosion from "../effects/Explosion";
@@ -14,14 +15,14 @@ export default class Player extends Phaser.Physics.Arcade.Image {
 
   constructor(scene) {
     super(scene, 400, 300, "cat");
-    this.scale = 0.4;
-    this.alpha = 1;
-    this.m_hpBar = new HpBar(scene, this, 100);
+    this.scale = 0.4; // 크기 조정
+    this.alpha = 1; // 투명도 설정
+    this.m_hpBar = new HpBar(scene, this, 100); // HP bar 생성
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
-    // physics
+    // 1초마다 자동으로 공격
     this.scene.time.addEvent({
       delay: 1000,
       callback: () => {
@@ -31,9 +32,9 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     });
   }
 
-  update() {}
-
+  // enemy와 접촉했을 경우
   hitByEnemy(damage) {
+    // 쿨타임이었던 경우 공격받지 않음
     if (this.alpha < 1) return;
 
     this.scene.m_hurtSound.play();

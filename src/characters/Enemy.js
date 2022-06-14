@@ -12,15 +12,16 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.m_speed = 50;
     this.m_hp = initHp;
     this.m_dropRate = dropRate;
+    
+    if (animKey) {
+      this.play(animKey);
+    }
 
     this.on("overlapstart", (projectile) => {
       this.hit(projectile, 10);
     });
 
-    if (animKey) {
-      this.play(animKey);
-    }
-
+    // 계속해서(0.1초마다) player 방향으로 움직이도록 해줍니다.
     this.m_events = [];
     this.m_events.push(
       this.scene.time.addEvent({
@@ -39,13 +40,14 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   update(time, delta) {
-    // TODO : refactor (없어진 enemy에서도 계속 호출되는 듯)
     if (!this.body) return;
 
+    // 오른쪽으로 향할 때는 오른쪽을, 왼쪽으로 향할 때는 왼쪽을 바라보도록 해줍니다.
     if (this.body.velocity.x > 0) this.flipX = true;
     else this.flipX = false;
   }
 
+  // enemy가 공격에 맞을 경우 실행되는 함수
   hit(projectile, damage) {
     this.m_hp -= damage;
 
@@ -53,23 +55,24 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     projectile.destroy();
     this.scene.m_hitEnemySound.play();
 
+    // HP가 0 이하가 되는 경우
     if (this.m_hp <= 0) {
-      const explosion = new Explosion(this.scene, this.x, this.y);
+      // 폭발 효과를 발생시킨다.
+      new Explosion(this.scene, this.x, this.y);
+      this.scene.m_explosionSound.play();
 
-      // 랜덤으로 item 떨어뜨리기
+      // dropRate의 확률로 item을 떨어뜨린다.
       if (Math.random() < this.m_dropRate) {
         const expUp = new ExpUp(this.scene, this);
         this.scene.m_expUps.add(expUp);
       }
 
-      // TODO: 이런건 scene에서?
-      this.scene.m_score += 1;
-      this.scene.m_scoreLabel.text = `ENEMY KILLED ${this.scene.m_score
-        .toString()
-        .padStart(6, "0")}`;
-      this.scene.m_explosionSound.play();
+      // score(enemy killed)에 1을 더해준다.
+      this.scene.scoreUp();
 
+      // player 쪽으로 움직이게 만들었던 event를 제거한다.
       this.scene.time.removeEvent(this.m_events);
+      // enemy를 제거한다.
       this.destroy();
     }
   }

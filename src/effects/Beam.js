@@ -17,10 +17,11 @@ export default class Beam extends Phaser.Physics.Arcade.Sprite {
     scene.m_beamSound.play();
 
     this.setCircle(30);
-    this.setDepth(90);
+    this.setDepth(80);
     this.setVelocity();
     this.setAngle();
 
+    // DURATION만큼 시간이 지나면 사라짐
     scene.time.addEvent({
       delay: Beam.DURATION,
       callback: () => {
@@ -29,8 +30,6 @@ export default class Beam extends Phaser.Physics.Arcade.Sprite {
       loop: false,
     });
   }
-
-  update() {}
 
   setVelocity() {
     if (!this.scene.m_closest) {

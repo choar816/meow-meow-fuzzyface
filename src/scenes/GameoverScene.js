@@ -38,7 +38,7 @@ export default class GameoverScene extends Phaser.Scene {
       )
       .setOrigin(0.5);
 
-    const startButton = new Button(
+    new Button(
       Config.width / 2,
       Config.height / 2 + 100,
       "Go to Main",

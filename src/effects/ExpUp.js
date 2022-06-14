@@ -7,6 +7,7 @@ export default class ExpUp extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, "exp-up");
     this.scale = 1.5;
 
+    // 반반 확률로 색깔 결정 (삭제 예정)
     if (Math.random() < 0.5) {
       this.play("red");
     } else {

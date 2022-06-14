@@ -1,3 +1,5 @@
+import Phaser from "phaser";
+
 export default class Button extends Phaser.GameObjects.Text {
   constructor(x, y, label, scene, callback) {
     super(scene, x, y, label, { backgroundColor: "#8aacc8" });

@@ -1,3 +1,4 @@
+import Phaser from "phaser";
 import { clamp } from "../utils/math";
 
 export default class HpBar extends Phaser.GameObjects.Graphics {

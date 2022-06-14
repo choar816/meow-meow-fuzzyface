@@ -19,7 +19,7 @@ export default class MainScene extends Phaser.Scene {
 
     this.add.image(Config.width / 2, Config.height / 2, "cat");
 
-    const startButton = new Button(
+    new Button(
       Config.width / 2,
       Config.height / 2 + 150,
       "Start Game",

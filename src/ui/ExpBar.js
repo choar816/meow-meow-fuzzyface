@@ -1,3 +1,4 @@
+import Phaser from "phaser";
 // import Config from "../Config";
 import { clamp } from "../utils/math";
 
