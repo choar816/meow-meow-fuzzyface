@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import bgImg from "../assets/images/background.png";
 import explosionImg from "../assets/spritesheets/explosion.png";
-import powerUpImg from "../assets/spritesheets/power-up.png";
+import expUpImg from "../assets/spritesheets/power-up.png";
 import catImg from "../assets/images/cat-rainbow.png";
 import beamImg from "../assets/spritesheets/beam.png";
 import fontPng from "../assets/font/font.png";
@@ -44,7 +44,7 @@ export default class LoadingScene extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 16,
     });
-    this.load.spritesheet("power-up", powerUpImg, {
+    this.load.spritesheet("exp-up", expUpImg, {
       frameWidth: 16,
       frameHeight: 16,
     });
@@ -100,7 +100,7 @@ export default class LoadingScene extends Phaser.Scene {
 
     this.anims.create({
       key: "red",
-      frames: this.anims.generateFrameNumbers("power-up", {
+      frames: this.anims.generateFrameNumbers("exp-up", {
         start: 0,
         end: 1,
       }),
@@ -109,7 +109,7 @@ export default class LoadingScene extends Phaser.Scene {
     });
     this.anims.create({
       key: "gray",
-      frames: this.anims.generateFrameNumbers("power-up", {
+      frames: this.anims.generateFrameNumbers("exp-up", {
         start: 2,
         end: 3,
       }),

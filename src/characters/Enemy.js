@@ -1,7 +1,8 @@
 import Explosion from "../effects/Explosion";
+import ExpUp from "../effects/ExpUp";
 
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, texture, animKey, initHp) {
+  constructor(scene, x, y, texture, animKey, initHp, dropRate) {
     super(scene, x, y, texture);
 
     scene.add.existing(this);
@@ -10,6 +11,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.scale = 2;
     this.m_speed = 50;
     this.m_hp = initHp;
+    this.m_dropRate = dropRate;
 
     this.on("overlapstart", (projectile) => {
       this.hit(projectile, 10);
@@ -53,6 +55,12 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     if (this.m_hp <= 0) {
       const explosion = new Explosion(this.scene, this.x, this.y);
+
+      // 랜덤으로 item 떨어뜨리기
+      if (Math.random() < this.m_dropRate) {
+        const expUp = new ExpUp(this.scene, this);
+        this.scene.m_expUps.add(expUp);
+      }
 
       // TODO: 이런건 scene에서?
       this.scene.m_score += 1;

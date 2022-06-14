@@ -100,8 +100,8 @@ export default class PlayingScene extends Phaser.Scene {
     // projectiles
     this.m_projectiles = this.add.group();
 
-    // powerUp
-    this.m_powerUps = this.physics.add.group();
+    // expUp
+    this.m_expUps = this.physics.add.group();
 
     // player
     this.m_player = new Player(this);
@@ -122,8 +122,8 @@ export default class PlayingScene extends Phaser.Scene {
     // overlap : 접촉 -> 바운스 X
     this.physics.add.overlap(
       this.m_player,
-      this.m_powerUps,
-      this.pickPowerUp,
+      this.m_expUps,
+      this.pickExpUp,
       null,
       this
     );
@@ -168,28 +168,7 @@ export default class PlayingScene extends Phaser.Scene {
     );
 
     // Timers
-    this.addEnemy("bat", "bat_anim", 10);
-    this.time.addEvent({
-      delay: 1000,
-      callback: () => {
-        // TODO: powerup 클래스 분리
-        const r = Math.sqrt(
-          Config.width * Config.width + Config.height * Config.height
-        ); // 좀 멀리 생기게 했음
-        const [x, y] = getRandomPosition(this.m_player.x, this.m_player.y, r);
-        const powerUp = this.physics.add.sprite(16, 16, "power-up");
-        powerUp.scale = 1.5;
-        this.m_powerUps.add(powerUp);
-        powerUp.setPosition(x, y);
-
-        if (Math.random() > 0.5) {
-          powerUp.play("red");
-        } else {
-          powerUp.play("gray");
-        }
-      },
-      loop: true,
-    });
+    this.addEnemy("bat", "bat_anim", 10, 0.9);
 
     /// TEMP AREA
     this.m_gfx = this.add.graphics();
@@ -224,15 +203,15 @@ export default class PlayingScene extends Phaser.Scene {
 
   //////////////////////// FUNCTIONS ////////////////////////
 
-  pickPowerUp(player, powerUp) {
+  pickExpUp(player, expUp) {
     /*
         disableBody
         parameter 1 : make it inactive
         parameter 2 : hide it from the display list
         */
-    powerUp.disableBody(true, true);
-    powerUp.destroy();
-    // player.gainPower(10);
+    expUp.disableBody(true, true);
+    expUp.destroy();
+
     this.m_pickupSound.play();
     this.m_expBar.increase(10);
     if (this.m_expBar.m_currentExp >= this.m_expBar.m_maxExp) {
@@ -251,13 +230,13 @@ export default class PlayingScene extends Phaser.Scene {
     // TODO : 노가다 -> brilliant way
     // 지금 방식 = 레벨업 할 때마다 enemy 종류 추가 (없어지진 않음 ㅋ)
     if (this.m_level == 2) {
-      this.addEnemy("dog", "dog_anim", 20);
+      this.addEnemy("dog", "dog_anim", 20, 0.6);
     } else if (this.m_level == 3) {
-      this.addEnemy("eyeball", "eyeball_anim", 30);
+      this.addEnemy("eyeball", "eyeball_anim", 30, 0.3);
     }
   }
 
-  addEnemy(enemyTexture, enemyAnim, enemyHp) {
+  addEnemy(enemyTexture, enemyAnim, enemyHp, enemyDropRate) {
     this.time.addEvent({
       delay: 1000,
       callback: () => {
@@ -267,7 +246,7 @@ export default class PlayingScene extends Phaser.Scene {
           ) / 2;
         let [x, y] = getRandomPosition(this.m_player.x, this.m_player.y, r);
         this.m_enemies.add(
-          new Enemy(this, x, y, enemyTexture, enemyAnim, enemyHp)
+          new Enemy(this, x, y, enemyTexture, enemyAnim, enemyHp, enemyDropRate)
         );
       },
       loop: true,
@@ -299,7 +278,11 @@ export default class PlayingScene extends Phaser.Scene {
 
   createLevelScreen() {
     // Pause text (level)
-    const texts = ["You're on the Next Level!", "", "Press Enter to Keep Going"];
+    const texts = [
+      "You're on the Next Level!",
+      "",
+      "Press Enter to Keep Going",
+    ];
     this.m_textLevel = this.add
       .text(Config.width / 2, Config.height / 2, texts, { fontSize: 40 })
       .setOrigin(0.5);
