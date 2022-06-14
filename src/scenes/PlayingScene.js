@@ -195,20 +195,20 @@ export default class PlayingScene extends Phaser.Scene {
     );
     this.m_closest = closest;
     // this.m_gfx.clear()
-    //     .lineStyle(2, 0xff3300)
-    //     .lineBetween(closest.x, closest.y, this.m_player.x, this.m_player.y)
-    //     .lineStyle(2, 0x0099ff)
-    //     .lineBetween(furthest.x, furthest.y, this.m_player.x, this.m_player.y);
+    //  .lineStyle(2, 0xff3300)
+    //  .lineBetween(closest.x, closest.y, this.m_player.x, this.m_player.y)
+    //  .lineStyle(2, 0x0099ff)
+    //  .lineBetween(furthest.x, furthest.y, this.m_player.x, this.m_player.y);
   }
 
   //////////////////////// FUNCTIONS ////////////////////////
 
   pickExpUp(player, expUp) {
     /*
-        disableBody
-        parameter 1 : make it inactive
-        parameter 2 : hide it from the display list
-        */
+    disableBody
+    parameter 1 : make it inactive
+    parameter 2 : hide it from the display list
+    */
     expUp.disableBody(true, true);
     expUp.destroy();
 
