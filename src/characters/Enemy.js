@@ -1,5 +1,5 @@
 import Explosion from "../effects/Explosion";
-import ExpUp from "../effects/ExpUp";
+import ExpUp from "../items/ExpUp";
 
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, texture, animKey, initHp, dropRate) {
