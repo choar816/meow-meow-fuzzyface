@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 export default class Beam extends Phaser.Physics.Arcade.Sprite {
   static SPEED = 100;
-  static DURATION = 10000;
+  static DURATION = 1000;
 
   constructor(scene, player) {
     const x = player.x;
@@ -21,7 +21,13 @@ export default class Beam extends Phaser.Physics.Arcade.Sprite {
     this.setVelocity();
     this.setAngle();
 
-    setTimeout(() => this.destroy(), Beam.DURATION);
+    scene.time.addEvent({
+      delay: Beam.DURATION,
+      callback: () => {
+        this.destroy();
+      },
+      loop: false,
+    });
   }
 
   update() {}
