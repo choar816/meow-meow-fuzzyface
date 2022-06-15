@@ -6,6 +6,7 @@ import Enemy from "../characters/Enemy";
 import global_pause from "../utils/pause";
 import level_pause from "../utils/levelup";
 import { getRandomPosition } from "../utils/math";
+import { getTimeString } from "../utils/time";
 
 export default class PlayingScene extends Phaser.Scene {
   constructor() {
@@ -172,7 +173,22 @@ export default class PlayingScene extends Phaser.Scene {
       this
     );
 
-    // Timers
+    // runtime
+    this.m_secondElapsed = 0;
+    this.m_timeText = this.add
+      .text(Config.width / 2, 100, "00:00:00", { fontSize: 30 })
+      .setOrigin(0.5)
+      .setDepth(105)
+      .setScrollFactor(0);
+    this.time.addEvent({
+      callback: () => {
+        this.m_secondElapsed += 1;
+        this.m_timeText.setText(getTimeString(this.m_secondElapsed));
+      },
+      delay: 1000,
+      loop: true,
+    });
+
     // 처음에 나타날 적을 추가해줍니다.
     this.addEnemy("bat", "bat_anim", 10, 0.9);
   }
