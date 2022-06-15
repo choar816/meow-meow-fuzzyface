@@ -196,7 +196,7 @@ export default class PlayingScene extends Phaser.Scene {
     expUp.destroy();
 
     this.m_pickupSound.play();
-    this.m_expBar.increase(10);
+    this.m_expBar.increase(expUp.m_exp);
     if (this.m_expBar.m_currentExp >= this.m_expBar.m_maxExp) {
       level_pause(this);
     }

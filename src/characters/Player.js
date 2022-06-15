@@ -105,3 +105,4 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     this.m_hpBar.increase(amount);
   }
 }
+ 
