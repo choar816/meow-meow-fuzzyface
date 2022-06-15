@@ -43,8 +43,8 @@ export default class Player extends Phaser.Physics.Arcade.Image {
       // 게임오버!
       this.scene.m_gameoverSound.play();
       this.scene.scene.start("gameoverScene", {
-        enemyKilled: this.scene.m_score,
-        level: this.scene.m_level,
+        enemyKilled: this.scene.m_topBar.m_score,
+        level: this.scene.m_topBar.m_level,
       }); // 이거 맞냐?
     }
 

@@ -1,12 +1,13 @@
 import Phaser from "phaser";
+import Config from "../Config";
+import TopBar from "../ui/TopBar";
 import ExpBar from "../ui/ExpBar";
 import Player, { Direction } from "../characters/Player";
-import Config from "../Config";
 import Enemy from "../characters/Enemy";
 import global_pause from "../utils/pause";
 import level_pause from "../utils/levelup";
-import { getRandomPosition } from "../utils/math";
 import { getTimeString } from "../utils/time";
+import { getRandomPosition } from "../utils/math";
 
 export default class PlayingScene extends Phaser.Scene {
   constructor() {
@@ -55,36 +56,8 @@ export default class PlayingScene extends Phaser.Scene {
     );
     this.m_background.setOrigin(0, 0);
 
-    // score(enemy killed) label 생성
-    const graphics = this.add.graphics();
-    graphics.fillStyle(0x28288c);
-    graphics.fillRect(0, 0, Config.width, 30);
-    graphics.setDepth(90);
-    graphics.setScrollFactor(0);
-    this.m_score = 0;
-    this.m_scoreLabel = this.add.bitmapText(
-      5,
-      1,
-      "pixelFont",
-      `ENEMY KILLED ${this.m_score.toString().padStart(6, "0")}`,
-      40
-    );
-    this.m_scoreLabel.setScrollFactor(0);
-    this.m_scoreLabel.setDepth(100);
-
-    // level label 생성
-    this.m_level = 1;
-    this.m_levelLabel = this.add.bitmapText(
-      650,
-      1,
-      "pixelFont",
-      `LEVEL ${this.m_level.toString().padStart(3, "0")}`,
-      40
-    );
-    this.m_levelLabel.setScrollFactor(0);
-    this.m_levelLabel.setDepth(100);
-
-    // exp bar
+    // topBar, expBar
+    this.m_topBar = new TopBar(this);
     this.m_expBar = new ExpBar(this, 50);
 
     // enemies
@@ -229,26 +202,14 @@ export default class PlayingScene extends Phaser.Scene {
     }
   }
 
-  scoreUp() {
-    this.m_score += 1;
-    this.m_scoreLabel.text = `ENEMY KILLED ${this.m_score
-      .toString()
-      .padStart(6, "0")}`;
-  }
-
   afterLevelUp() {
-    this.m_level += 1;
-    this.m_levelLabel.text = `LEVEL ${this.m_level
-      .toString()
-      .padStart(3, "0")}`;
-    this.m_expBar.m_maxExp += 10; // 레벨업 할 때마다 max 경험치가 10씩 증가합니다.
-    this.m_expBar.reset();
+    this.m_topBar.gainLevel();
 
     // TODO : 노가다 -> brilliant way
     // 지금 방식 = 레벨업 할 때마다 enemy 종류 추가 (없어지진 않음 ㅋ)
-    if (this.m_level == 2) {
+    if (this.m_topBar.m_level == 2) {
       this.addEnemy("dog", "dog_anim", 20, 0.6);
-    } else if (this.m_level == 3) {
+    } else if (this.m_topBar.m_level == 3) {
       this.addEnemy("eyeball", "eyeball_anim", 30, 0.3);
     }
   }

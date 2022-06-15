@@ -68,7 +68,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
       }
 
       // score(enemy killed)에 1을 더해준다.
-      this.scene.scoreUp();
+      this.scene.m_topBar.gainScore();
 
       // player 쪽으로 움직이게 만들었던 event를 제거한다.
       this.scene.time.removeEvent(this.m_events);
