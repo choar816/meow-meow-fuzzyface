@@ -288,9 +288,9 @@ export default class PlayingScene extends Phaser.Scene {
     ];
     this.m_textLevel = this.add
       .text(Config.width / 2, Config.height / 2, texts, { fontSize: 40 })
-      .setOrigin(0.5);
-    this.m_textLevel.setDepth(120);
-    this.m_textLevel.setScrollFactor(0);
+      .setOrigin(0.5)
+      .setDepth(120)
+      .setScrollFactor(0);
 
     // 처음에는 보이지 않게 감춰줍니다.
     this.toggleLevelScreen(false);
@@ -305,9 +305,9 @@ export default class PlayingScene extends Phaser.Scene {
   createPauseScreen() {
     this.m_textPause = this.add
       .text(Config.width / 2, Config.height / 2, "Pause", { fontSize: 50 })
-      .setOrigin(0.5);
-    this.m_textPause.setDepth(120);
-    this.m_textPause.setScrollFactor(0);
+      .setOrigin(0.5)
+      .setDepth(120)
+      .setScrollFactor(0);
 
     // 처음에는 보이지 않게 감춰줍니다.
     this.togglePauseScreen(false);
