@@ -31,6 +31,7 @@ export default class Beam extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
+  // beam이 가장 가까운 mob으로 날아가도록 속도를 설정해주는 함수
   setVelocity() {
     if (!this.scene.m_closest) {
       this.setVelocityY(-250);
@@ -43,14 +44,15 @@ export default class Beam extends Phaser.Physics.Arcade.Sprite {
     this.body.velocity.y = (_y / _r) * Beam.SPEED;
   }
 
+  // beam이 mob에 날아갈 때 각도를 설정해주는 함수
   setAngle() {
-    const angleToEnemy = Phaser.Math.Angle.Between(
+    const angleToMob = Phaser.Math.Angle.Between(
       this.x,
       this.y,
       this.scene.m_closest.x,
       this.scene.m_closest.y
     );
-    this.rotation = angleToEnemy + Math.PI / 2;
+    this.rotation = angleToMob + Math.PI / 2;
     this.body.setAngularVelocity(0);
   }
 }

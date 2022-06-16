@@ -8,8 +8,8 @@ export default class GameoverScene extends Phaser.Scene {
   }
 
   init(data) {
-    this.enemyKilled = data.enemyKilled;
-    this.level = data.level;
+    this.m_mobKilled = data.mobKilled;
+    this.m_level = data.level;
   }
 
   create() {
@@ -33,7 +33,7 @@ export default class GameoverScene extends Phaser.Scene {
         Config.width / 2,
         Config.height / 2,
         "pixelFont",
-        `Enemy Killed : ${this.enemyKilled}, Level : ${this.level}`,
+        `Mobs Killed : ${this.m_mobKilled}, Level : ${this.m_level}`,
         30
       )
       .setOrigin(0.5);

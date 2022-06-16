@@ -3,7 +3,7 @@ import Config from "../Config";
 import TopBar from "../ui/TopBar";
 import ExpBar from "../ui/ExpBar";
 import Player, { Direction } from "../characters/Player";
-import Enemy from "../characters/Enemy";
+import Mob from "../characters/Mob";
 import global_pause from "../utils/pause";
 import level_pause from "../utils/levelup";
 import { getTimeString } from "../utils/time";
@@ -31,7 +31,7 @@ export default class PlayingScene extends Phaser.Scene {
     this.m_gameoverSound = this.sound.add("audio_gameover");
     this.m_pauseInSound = this.sound.add("pause_in");
     this.m_pauseOutSound = this.sound.add("pause_out");
-    this.m_hitEnemySound = this.sound.add("hit_enemy");
+    this.m_hitMobSound = this.sound.add("hit_mob");
 
     this.m_music = this.sound.add("music");
     const musicConfig = {
@@ -60,11 +60,11 @@ export default class PlayingScene extends Phaser.Scene {
     this.m_topBar = new TopBar(this);
     this.m_expBar = new ExpBar(this, 50);
 
-    // enemies
-    this.m_enemies = this.physics.add.group();
-    // 맨 처음 enemy 하나 추가 (안 추가하면 closest enemy 찾는 부분에서 에러 발생)
-    this.m_enemies.add(
-      new Enemy(
+    // mobs
+    this.m_mobs = this.physics.add.group();
+    // 맨 처음 mob 하나 추가 (안 추가하면 closest mob 찾는 부분에서 에러 발생)
+    this.m_mobs.add(
+      new Mob(
         this,
         Config.width / 2 - 200,
         Config.height / 2 - 200,
@@ -114,27 +114,21 @@ export default class PlayingScene extends Phaser.Scene {
     );
     this.physics.add.overlap(
       this.m_player,
-      this.m_enemies,
-      () => this.m_player.hitByEnemy(10),
+      this.m_mobs,
+      () => this.m_player.hitByMob(10),
       null,
       this
     );
     this.physics.add.overlap(
       this.m_projectiles,
-      this.m_enemies,
-      (projectile, enemy) => {
-        enemy.hit(projectile, 10);
+      this.m_mobs,
+      (projectile, mob) => {
+        mob.hit(projectile, 10);
       },
       null,
       this
     );
-    this.physics.add.overlap(
-      this.m_projectiles,
-      this.m_enemies,
-      null,
-      null,
-      this
-    );
+    this.physics.add.overlap(this.m_projectiles, this.m_mobs, null, null, this);
 
     // event handler
     // ESC 키를 눌러 일시정지 할 수 있습니다.
@@ -162,8 +156,8 @@ export default class PlayingScene extends Phaser.Scene {
       loop: true,
     });
 
-    // 처음에 나타날 적을 추가해줍니다.
-    this.addEnemy("bat", "bat_anim", 10, 0.9);
+    // 처음에 나타날 mob을 추가해줍니다.
+    this.addMob("bat", "bat_anim", 10, 0.9);
   }
   //////////////////////////// END OF create() ////////////////////////////
 
@@ -176,10 +170,10 @@ export default class PlayingScene extends Phaser.Scene {
     this.m_background.tilePositionX = this.m_player.x - 400;
     this.m_background.tilePositionY = this.m_player.y - 300;
 
-    /// player로부터 가장 가까운 enemy를 구합니다.
+    /// player로부터 가장 가까운 mob으ㄹ 구합니다.
     const closest = this.physics.closest(
       this.m_player,
-      this.m_enemies.getChildren()
+      this.m_mobs.getChildren()
     );
     this.m_closest = closest;
   }
@@ -206,16 +200,16 @@ export default class PlayingScene extends Phaser.Scene {
     this.m_topBar.gainLevel();
 
     // TODO : 노가다 -> brilliant way
-    // 지금 방식 = 레벨업 할 때마다 enemy 종류 추가 (없어지진 않음 ㅋ)
+    // 지금 방식 = 레벨업 할 때마다 mob 종류 추가 (없어지진 않음 ㅋ)
     if (this.m_topBar.m_level == 2) {
-      this.addEnemy("dog", "dog_anim", 20, 0.6);
+      this.addMob("dog", "dog_anim", 20, 0.6);
     } else if (this.m_topBar.m_level == 3) {
-      this.addEnemy("eyeball", "eyeball_anim", 30, 0.3);
+      this.addMob("eyeball", "eyeball_anim", 30, 0.3);
     }
   }
 
-  // enemy가 1초마다 나타나도록 event를 생성해줍니다.
-  addEnemy(enemyTexture, enemyAnim, enemyHp, enemyDropRate) {
+  // mob이 1초마다 생성되도록 event를 생성해줍니다.
+  addMob(mobTexture, mobAnim, mobHp, mobDropRate) {
     this.time.addEvent({
       delay: 1000,
       callback: () => {
@@ -225,8 +219,8 @@ export default class PlayingScene extends Phaser.Scene {
             Config.width * Config.width + Config.height * Config.height
           ) / 2;
         let [x, y] = getRandomPosition(this.m_player.x, this.m_player.y, r);
-        this.m_enemies.add(
-          new Enemy(this, x, y, enemyTexture, enemyAnim, enemyHp, enemyDropRate)
+        this.m_mobs.add(
+          new Mob(this, x, y, mobTexture, mobAnim, mobHp, mobDropRate)
         );
       },
       loop: true,

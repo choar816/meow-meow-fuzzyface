@@ -1,7 +1,7 @@
 import Explosion from "../effects/Explosion";
 import ExpUp from "../items/ExpUp";
 
-export default class Enemy extends Phaser.Physics.Arcade.Sprite {
+export default class Mob extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, texture, animKey, initHp, dropRate) {
     super(scene, x, y, texture);
 
@@ -12,7 +12,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.m_speed = 50;
     this.m_hp = initHp;
     this.m_dropRate = dropRate;
-    
+
     if (animKey) {
       this.play(animKey);
     }
@@ -47,13 +47,13 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     else this.flipX = false;
   }
 
-  // enemy가 공격에 맞을 경우 실행되는 함수
+  // mob이 공격에 맞을 경우 실행되는 함수
   hit(projectile, damage) {
     this.m_hp -= damage;
 
     // TODO: 관통 무기
     projectile.destroy();
-    this.scene.m_hitEnemySound.play();
+    this.scene.m_hitMobSound.play();
 
     // HP가 0 이하가 되는 경우
     if (this.m_hp <= 0) {
@@ -67,12 +67,12 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene.m_expUps.add(expUp);
       }
 
-      // score(enemy killed)에 1을 더해준다.
+      // score(mobs killed)에 1을 더해준다.
       this.scene.m_topBar.gainScore();
 
       // player 쪽으로 움직이게 만들었던 event를 제거한다.
       this.scene.time.removeEvent(this.m_events);
-      // enemy를 제거한다.
+      // mob 객체를 제거한다.
       this.destroy();
     }
   }

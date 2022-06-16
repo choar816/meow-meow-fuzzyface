@@ -17,7 +17,7 @@ export default class TopBar extends Phaser.GameObjects.Graphics {
         5,
         1,
         "pixelFont",
-        `ENEMY KILLED ${this.m_score.toString().padStart(6, "0")}`,
+        `MOBS KILLED ${this.m_score.toString().padStart(6, "0")}`,
         40
       )
       .setScrollFactor(0)
@@ -40,7 +40,7 @@ export default class TopBar extends Phaser.GameObjects.Graphics {
 
   gainScore() {
     this.m_score += 1;
-    this.m_scoreLabel.text = `ENEMY KILLED ${this.m_score
+    this.m_scoreLabel.text = `MOBS KILLED ${this.m_score
       .toString()
       .padStart(6, "0")}`;
   }

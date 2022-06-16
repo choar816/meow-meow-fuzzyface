@@ -14,7 +14,7 @@ import gameoverOgg from "../assets/sounds/gameover.ogg";
 import bgmOgg from "../assets/sounds/lofi-bgm.ogg";
 import pauseIn from "../assets/sounds/pauseIn.ogg";
 import pauseOut from "../assets/sounds/pauseOut.ogg";
-import hitEnemyOgg from "../assets/sounds/hitEnemy.ogg";
+import hitMobOgg from "../assets/sounds/hitMob.ogg";
 import batImg from "../assets/spritesheets/bat.png";
 import dogImg from "../assets/spritesheets/dog.png";
 import eyeballImg from "../assets/spritesheets/eyeball.png";
@@ -64,7 +64,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.audio("music", bgmOgg);
     this.load.audio("pause_in", pauseIn);
     this.load.audio("pause_out", pauseOut);
-    this.load.audio("hit_enemy", hitEnemyOgg);
+    this.load.audio("hit_mob", hitMobOgg);
   }
 
   create() {

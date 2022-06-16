@@ -32,20 +32,21 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     });
   }
 
-  // enemy와 접촉했을 경우
-  hitByEnemy(damage) {
+  // mob과 접촉했을 경우
+  hitByMob(damage) {
     // 쿨타임이었던 경우 공격받지 않음
     if (this.alpha < 1) return;
 
     this.scene.m_hurtSound.play();
     this.m_hpBar.decrease(damage);
+
+    // hp가 0이 되면 게임오버!
     if (this.m_hpBar.m_currentHp <= 0) {
-      // 게임오버!
       this.scene.m_gameoverSound.play();
       this.scene.scene.start("gameoverScene", {
-        enemyKilled: this.scene.m_topBar.m_score,
+        mobKilled: this.scene.m_topBar.m_score,
         level: this.scene.m_topBar.m_level,
-      }); // 이거 맞냐?
+      });
     }
 
     new Explosion(this.scene, this.x, this.y);
@@ -105,4 +106,3 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     this.m_hpBar.increase(amount);
   }
 }
- 
