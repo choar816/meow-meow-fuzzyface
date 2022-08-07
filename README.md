@@ -20,6 +20,7 @@ meow-meow-fuzzyface는 게임 뱀파이어 서바이벌(Vampire Survivors)에 �
 
 - [배포 링크](https://choar816.github.io/meow-meow-fuzzyface/)
 - [관련 포스팅](https://choar816.tistory.com/164)
+- 강의 제작 중 ([링크](https://github.com/weniv/game-with-phaser))
 
 ## Tech Stack
 `JavaScript`, `Phaser 3`
